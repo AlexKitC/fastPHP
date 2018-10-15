@@ -1,0 +1,22 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+#Alex-Root{
+    width: 50%;
+    margin: 50px auto;
+}
+#Alex-Welcome h2{
+   margin-bottom: 16px;
+   color: #333;
+}
+#Alex-Welcome h3{
+    margin: 16px auto;
+    color: #666;
+ }
+#Alex-Welcome a{
+    color: #999;
+}
+#Wrap{
+    border: 1px solid #999;
+}
