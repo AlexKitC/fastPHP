@@ -1,9 +1,10 @@
 <?php
 namespace application\controller;
+use View\View;
 class Index{
 
     public function index(){
-        $index = new \View\View("/index/Index/index/");
+        $welcome = new View("/index/Index/welcome/");
     }
 
     public function index_do(){
@@ -12,7 +13,7 @@ class Index{
         echo json_encode($res);
     }
     public function test(){
-        $index = new \View\View("/index/Index/test");
+        $index = new View("/index/Index/test");
     }
 
 }
