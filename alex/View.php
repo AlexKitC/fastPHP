@@ -8,14 +8,14 @@ class View{
     /**
      * 渲染指定$pathinfo模板 需要包含模块控制器方法
      */
-    public function __construct($pathinfo){
+    public function __construct($pathinfo,$debug=TRUE){
         if($pathinfo){
             $path = array_values(array_filter(explode("/",$pathinfo)));
             if(count($path) == 1){
                 try{
                     if(file_exists(APP_PATH."/application/".$path[0]."/view/".APP_CONTROLLER."/".APP_ACTION.".html")){
                         include APP_PATH."/application/".$path[0]."/view/".APP_CONTROLLER."/".APP_ACTION.".html";
-                        if(APP_DEBUG_TURN == 'TRUE'){
+                        if(APP_DEBUG_TURN == 'TRUE' && $debug !== FALSE){
                             $this -> debugInfo();
                         } 
                     }else{
@@ -29,7 +29,7 @@ class View{
                 try{
                     if(file_exists(APP_PATH."/application/".$path[0]."/view/".$path[1]."/".APP_ACTION.".html")){
                         include APP_PATH."/application/".$path[0]."/view/".$path[1]."/".APP_ACTION.".html";
-                        if(APP_DEBUG_TURN == 'TRUE'){
+                        if(APP_DEBUG_TURN == 'TRUE' && $debug !== FALSE){
                             $this -> debugInfo();
                         }
                     }else{
@@ -42,7 +42,7 @@ class View{
                 try{
                     if(file_exists(APP_PATH."/application/".$path[0]."/view/".$path[1]."/".$path[2].".html")){
                         include APP_PATH."/application/".$path[0]."/view/".$path[1]."/".$path[2].".html";
-                        if(APP_DEBUG_TURN == 'TRUE'){
+                        if(APP_DEBUG_TURN == 'TRUE' && $debug !== FALSE){
                             $this -> debugInfo();
                         } 
                     }else{
@@ -76,6 +76,7 @@ class View{
                             ."<h5>-当前控制器：".$_SERVER['c']."</h5>"
                             ."<h5>-当前方法：".$_SERVER['a']."</h5>"
                             .$param_sql
+                            ."<h5>-Drived By：AlexMC framework by Alex-黑白&nbsp;&nbsp;<img style='width:16px;' src='/public/static/images/author.jpg' /></h5>"
                             ."<h5>-------------------------------debugInfoEnd-------------------------------</h5></div></div>";
         echo $info;
     }
