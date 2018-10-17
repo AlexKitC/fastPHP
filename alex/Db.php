@@ -108,16 +108,16 @@ class Db{
             if($k == 0){
                 $pre = " (".$fields_keys[$k];
                 $aft = " VALUES (?";
-            }elseif($k<count($fields_keys)-1){
+            }elseif($k < count($fields_keys)-1){
                 $pre .= ",".$fields_keys[$k];
                 $aft .= ",?";
-            }else{
-                $pre .= $fields_keys[$k].")";
-                $aft .= ")";
+            }elseif($k == count($fields_keys)-1){
+                $pre .= ",".$fields_keys[$k].")";
+                $aft .= ",?)";
             }
         }
         $sql = "INSERT INTO ".$table.$pre.$aft;
-        $stmt -> $this -> conn -> prepare($sql);
+        $stmt = $this -> conn -> prepare($sql);
         foreach($fields_vals as $k => $v){
             $stmt -> bindParam($k+1,$fields_vals[$k]);
         }
