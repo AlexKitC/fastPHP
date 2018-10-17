@@ -15,7 +15,7 @@ class Db{
             die('错误！当前环境未开启php_pdo_mysql扩展');
         }else{
             try{
-                $conn = new \PDO("mysql:host=".SQLHOST.";dbname=".DATABASE,SQLUSERNAME,SQLPASSWORD);
+                $conn = new \PDO("mysql:host=".SQLHOST.";dbname=".DATABASE,SQLUSERNAME,SQLPASSWORD,array(\PDO::MYSQL_ATTR_INIT_COMMAND => "set names utf8"));
                 if($conn){
                     $this -> conn = $conn;
                 }
@@ -91,6 +91,38 @@ class Db{
         $result = $this -> conn -> query($sql);
         $this -> dbLog($sql,round((microtime(true)-$tmp_cost),5));
         return $result->fetchColumn();
+    }
+
+    /**
+     * 插入单个条目 返回受影响的行
+     * @param $table  表名
+     * @param $fields 插入的字段(仅支持数组)
+     */
+    public function insert($table,$fields){
+        $table = SQLTABLEPREFIX == ''?$table:SQLTABLEPREFIX.$table;
+        $fields_keys = array_keys($fields);
+        $fields_vals = array_values($fields);
+        $pre = "";
+        $aft = "";
+        foreach($fields_keys as $k => $v){
+            if($k == 0){
+                $pre = " (".$fields_keys[$k];
+                $aft = " VALUES (?";
+            }elseif($k<count($fields_keys)-1){
+                $pre .= ",".$fields_keys[$k];
+                $aft .= ",?";
+            }else{
+                $pre .= $fields_keys[$k].")";
+                $aft .= ")";
+            }
+        }
+        $sql = "INSERT INTO ".$table.$pre.$aft;
+        $stmt -> $this -> conn -> prepare($sql);
+        foreach($fields_vals as $k => $v){
+            $stmt -> bindParam($k+1,$fields_vals[$k]);
+        }
+        $res = $stmt -> execute();
+        return $res;
     }
 
     /**
