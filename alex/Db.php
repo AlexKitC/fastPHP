@@ -10,6 +10,7 @@ class Db{
     private $conn;//连接句柄
     private $sql;
     private $table;
+    private $tmp_cost;//初始开销
 
     public function __construct($table){
         if(!class_exists('pdo')){
@@ -20,6 +21,7 @@ class Db{
                 if($conn){
                     $this -> conn = $conn;
                     $this -> table = SQLTABLEPREFIX == ''?$table:SQLTABLEPREFIX.$table;
+                    $this -> tmp_cost = microtime(true);
                 }
             }catch(\PDOException $e){
                 echo $e->getMessage();
@@ -43,11 +45,10 @@ class Db{
             $filedsStr = implode(",",$fields);
             $sql = "SELECT ".$filedsStr." FROM ".$this -> table.$where.$limit.$orderBy;
             $this -> sql = $sql;
-            $tmp_cost = microtime(true);
             $res = $this -> conn -> prepare($sql);
             $res -> execute();
             $resultArr = $res -> fetchAll(\PDO::FETCH_ASSOC);
-            $this -> dbLog($sql,round((microtime(true)-$tmp_cost),5));
+            $this -> dbLog($sql,round((microtime(true)-$this -> tmp_cost),5));
             return $resultArr;
         }else{
             die('Class Db() function query params($fields) must be array!');
@@ -65,11 +66,10 @@ class Db{
             $filedsStr = implode(",",$fields);
             $sql = "SELECT ".$filedsStr." FROM ".$this -> table.$where." LIMIT 1";
             $this -> sql = $sql;
-            $tmp_cost = microtime(true);
             $res = $this -> conn -> prepare($sql);
             $res -> execute();
             $resultArr = $res -> fetch(\PDO::FETCH_ASSOC);
-            $this -> dbLog($sql,round((microtime(true)-$tmp_cost),5));
+            $this -> dbLog($sql,round((microtime(true)-$this -> tmp_cost),5));
             return $resultArr;
         }else{
             die('Class Db() function query params($fields) must be array!');
@@ -83,9 +83,8 @@ class Db{
     public function getCount(){
         $sql = "SELECT count('*') FROM ".$this -> table;
         $this -> sql = $sql;
-        $tmp_cost = microtime(true);
         $result = $this -> conn -> query($sql);
-        $this -> dbLog($sql,round((microtime(true)-$tmp_cost),5));
+        $this -> dbLog($sql,round((microtime(true)-$this -> tmp_cost),5));
         return $result->fetchColumn();
     }
 
@@ -116,7 +115,13 @@ class Db{
             $stmt -> bindParam($k+1,$fields_vals[$k]);
         }
         $res = $stmt -> execute();
-        return $res;
+        if($res){
+            $this -> dbLog($sql,round((microtime(true)-$this -> tmp_cost),5));
+            return $res;
+        }else{
+            dump($stmt->errorInfo());
+        }
+        
     }
 
     /**
@@ -137,13 +142,19 @@ class Db{
                 $pre .= ",".$fields_keys[$k]." = ?";
             }   
         }
-        $sql = "UPDATE ".$this -> table.$pre." WHERE ".$where;
-        $stmt = $this -> conn -> prepare($sql);
+        $this -> sql = "UPDATE ".$this -> table.$pre." WHERE ".$where;
+        $stmt = $this -> conn -> prepare($this -> sql);
         foreach($fields_vals as $k => $v){
             $stmt -> bindParam($k+1,$fields_vals[$k]);
         }
         $res = $stmt -> execute();
-        return $res;
+        if($res){
+            $this -> dbLog($sql,round((microtime(true)-$this -> tmp_cost),5));
+            return $res;
+        }else{
+            dump($stmt->errorInfo());
+        }
+        
     }
 
     /**
@@ -152,7 +163,9 @@ class Db{
      * @return 受影响的行数
      */
     public function delete($where){
-        $res = $this -> conn -> exec("DELETE FROM ".$this -> table." WHERE ".$where);
+        $this -> sql = "DELETE FROM ".$this -> table." WHERE ".$where;
+        $res = $this -> conn -> exec($this -> sql);
+        $this -> dbLog($sql,round((microtime(true)-$this -> tmp_cost),5));
         return $res;
     }
 
