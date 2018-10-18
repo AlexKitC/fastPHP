@@ -120,6 +120,7 @@ class Db{
             return $res;
         }else{
             dump($stmt->errorInfo());
+            return false;
         }
         
     }
@@ -153,6 +154,7 @@ class Db{
             return $res;
         }else{
             dump($stmt->errorInfo());
+            return false;
         }
         
     }
