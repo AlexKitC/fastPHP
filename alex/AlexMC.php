@@ -83,9 +83,8 @@ class AlexMC{
                                 die('ERROR: unexpected params\'s number');
                             }
                             
-                        }else{//无参数再检测是否存在post数据
-                            $params = file_get_contents("php://input");
-                            $_POST = $params;
+                        }else{
+                            
                             $Controller -> $action();    
                         }
                     }else{
