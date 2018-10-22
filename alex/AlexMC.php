@@ -162,67 +162,67 @@ class AlexMC{
     }
  
     // 检测开发环境
-    function setReporting() {
-        if (APP_DEBUG == true) {
-            error_reporting(E_ALL);
-            ini_set('display_errors','On');
-        } else {
-            error_reporting(E_ALL);
-            ini_set('display_errors','Off');
-            ini_set('log_errors', 'On');
-            ini_set('error_log', RUNTIME_PATH. 'logs/error.log');
-        }
-    }
+    // function setReporting() {
+    //     if (APP_DEBUG == true) {
+    //         error_reporting(E_ALL);
+    //         ini_set('display_errors','On');
+    //     } else {
+    //         error_reporting(E_ALL);
+    //         ini_set('display_errors','Off');
+    //         ini_set('log_errors', 'On');
+    //         ini_set('error_log', RUNTIME_PATH. 'logs/error.log');
+    //     }
+    // }
  
     // 删除敏感字符
-    function stripSlashesDeep($value) {
-        $value = is_array($value) ? array_map('stripSlashesDeep', $value) : stripslashes($value);
-        return $value;
-    }
+    // function stripSlashesDeep($value) {
+    //     $value = is_array($value) ? array_map('stripSlashesDeep', $value) : stripslashes($value);
+    //     return $value;
+    // }
  
     // 检测敏感字符并删除 
-    function removeMagicQuotes() {
-        if ( get_magic_quotes_gpc() ) {
-            $_GET = stripSlashesDeep($_GET );
-            $_POST = stripSlashesDeep($_POST );
-            $_COOKIE = stripSlashesDeep($_COOKIE);
-            $_SESSION = stripSlashesDeep($_SESSION);
-        }
-    }
+    // function removeMagicQuotes() {
+    //     if ( get_magic_quotes_gpc() ) {
+    //         $_GET = stripSlashesDeep($_GET );
+    //         $_POST = stripSlashesDeep($_POST );
+    //         $_COOKIE = stripSlashesDeep($_COOKIE);
+    //         $_SESSION = stripSlashesDeep($_SESSION);
+    //     }
+    // }
  
     // 检测自定义全局变量（register globals）并移除
-    function unregisterGlobals() {
-        if (ini_get('register_globals')) {
-            $array = array('_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
-           foreach ($array as $value) {
-                foreach ($GLOBALS[$value] as $key => $var) {
-                    if ($var === $GLOBALS[$key]) {
-                        unset($GLOBALS[$key]);
-                    }
-                }
-            }
-        }
-    }
+    // function unregisterGlobals() {
+    //     if (ini_get('register_globals')) {
+    //         $array = array('_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES');
+    //        foreach ($array as $value) {
+    //             foreach ($GLOBALS[$value] as $key => $var) {
+    //                 if ($var === $GLOBALS[$key]) {
+    //                     unset($GLOBALS[$key]);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
  
     //自动加载控制器和模型类 
-    static function loadClass($class) {
-        $frameworks = ROOT . $class . EXT;
-        $controllers = APP_PATH . 'application/controller/' . $class . EXT;
-        $models = APP_PATH . 'application/models/' . $class . EXT;
+    // static function loadClass($class) {
+    //     $frameworks = ROOT . $class . EXT;
+    //     $controllers = APP_PATH . 'application/controller/' . $class . EXT;
+    //     $models = APP_PATH . 'application/models/' . $class . EXT;
  
-        if (file_exists($frameworks)) {
-            // 加载框架核心类
-            include $frameworks;
-        } elseif (file_exists($controllers)) {
-            // 加载应用控制器类
-            include $controllers;
-        } elseif (file_exists($models)) {
-            //加载应用模型类
-            include $models;
-        } else {
-            /* 错误代码 */
-        }
-    }
+    //     if (file_exists($frameworks)) {
+    //         // 加载框架核心类
+    //         include $frameworks;
+    //     } elseif (file_exists($controllers)) {
+    //         // 加载应用控制器类
+    //         include $controllers;
+    //     } elseif (file_exists($models)) {
+    //         //加载应用模型类
+    //         include $models;
+    //     } else {
+    //         /* 错误代码 */
+    //     }
+    // }
 
 
 }
