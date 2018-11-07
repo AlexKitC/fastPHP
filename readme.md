@@ -2,7 +2,7 @@
 ## QQ:          392999164
 ## create date: 2018/10/15
 ##              AlexMC弱化了传统php mvc的View相关功能，并没有选用流行的类smarty等模板，而是改用当下前端更为流行的Vue框架作为模板；AlexMC搭配
-##              nginx仅作为php容器返回静态html和static资源，同时为前端提供接口，返回数据给Vue渲染。这样nginx只处理静态html，无需等待生成绑定了数据 ##              的php文件(或php缓存文件)能获得极致的速度，vue提供模板语法，实现数据绑定。(目前在思考是接入vue-cli脚手架进行全家桶开发还是兼顾后端开 ##              发人员的学习成本仅仅轻度使用vue的数据绑定或自行手工js实现一个watcher去仿照vue的数据驱动dom)。
+##              nginx仅作为php容器返回静态html和static资源，同时为前端提供接口，返回数据给Vue渲染。这样nginx只处理静态html，vue提供模板语法(主要是得处理dom复用，api数据插入dom渲染)，实现数据绑定。(目前在思考是接入vue-cli脚手架进行全家桶开发还是兼顾后端开发人员的学习成本仅仅轻度使用vue的数据绑定还是自行手工js实现一个watcher去仿照vue的数据驱动dom)。
 
 
 ## tips
