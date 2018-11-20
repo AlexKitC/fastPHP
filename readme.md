@@ -1,4 +1,5 @@
 ### author:      Alex-黑白
+### 文档：       [文档地址](http://doc.91mylover.top/)
 ### QQ:          392999164
 ### create date: 2018/10/15
 ####              AlexMC实现了基于pathinfo模式的MVC，提供了两套模板方案和一套API方案。
