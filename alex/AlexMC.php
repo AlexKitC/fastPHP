@@ -23,6 +23,10 @@ if(REDIS_ENGINE_TURN == 'TRUE'){
 }else{
     die("ERROR: class Redis() need config.php  REDIS_ENGINE_TURN  => 'TRUE'");
 }
+if(SMARTY_ENGINE_TURN == 'TRUE'){
+    require APP_PATH.'/extends/smarty/libs/Smarty.class.php'; 
+}
+
 
 class AlexMC{
 
