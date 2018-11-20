@@ -1,9 +1,13 @@
 <?php
 namespace application\controller;
 use View\View;
+// use redis\Redis;
 class Index{
 
     public function index(){
+        // $smarty = new \Smarty();
+        // $smarty -> assign('content',"lalalala");
+        // $smarty -> display('index/Index/welcome');
         $welcome = new View("/index/Index/welcome/");
     }
 
