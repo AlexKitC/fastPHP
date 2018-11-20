@@ -8,23 +8,18 @@ namespace AlexMC;
 require_once "functions.php";
 if(DB_ENGINE_TURN == 'TRUE'){
     require_once APP_PATH."/alex/Db.php";
-}else{
-    die("ERROR: class Db() need config.php  DB_ENGINE_TURN  => 'TRUE'");
 }
 
 if(VIEW_ENGINE_TURN == 'TRUE'){
     require_once APP_PATH."/alex/View.php";
-}else{
-    die("ERROR: class View() need config.php  VIEW_ENGINE_TURN  => 'TRUE'");
 }
 
 if(REDIS_ENGINE_TURN == 'TRUE'){
     require_once APP_PATH."/extends/redis/Redis.php";
-}else{
-    die("ERROR: class Redis() need config.php  REDIS_ENGINE_TURN  => 'TRUE'");
 }
 if(SMARTY_ENGINE_TURN == 'TRUE'){
     require APP_PATH.'/extends/smarty/libs/Smarty.class.php'; 
+    require APP_PATH.'/alex/Controller.php'; 
 }
 
 
