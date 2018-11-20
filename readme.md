@@ -3,7 +3,7 @@
 ### create date: 2018/10/15
 ####              AlexMC实现了基于pathinfo模式的MVC，提供了两套模板方案和一套API方案。
 ####              1.开启config配置的VIEW_ENGINE_TURN开关，使用静态html视图输出，前端结合vue或者react利用axios等ajax库实现数据交换与绑定
-####              2.开启config配置的SMARTY_ENGINE_TURN开关（注意：这两个模板引擎开关只能选用一个），使用smarty模板输出混合后的php缓存文件作为模板####                输出，由于加载了smarty类的实例故内存会多耗费大约2.5倍。此时需要继承\controller\Controller并执行父类的构造方法即可使用smarty的####                实例
+####              2.开启config配置的SMARTY_ENGINE_TURN开关（注意：这两个模板引擎开关只能选用一个），使用smarty模板输出混合后的php缓存文件作为模板                     输出，由于加载了smarty类的实例故内存会多耗费大约2.5倍。此时需要继承\controller\Controller并执行父类的构造方法即可使用smarty的                     实例
 ####              3.仅用作api，则可关闭如上两个开关，仅用作api输出（最轻量）
 
 ### tips
