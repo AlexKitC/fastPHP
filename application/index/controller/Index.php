@@ -2,12 +2,15 @@
 namespace application\controller;
 use View\View;
 // use redis\Redis;
-class Index{
+// class Index extends \controller\Controller{ // 若启用smarty模板引擎请继承Controller类并执行其构造方法
+    class Index{
+    // public function __construct(){
+    //     parent::__construct();
+    // }
 
     public function index(){
-        // $smarty = new \Smarty();
-        // $smarty -> assign('content',"lalalala");
-        // $smarty -> display('index/Index/welcome');
+        // $this -> smarty -> assign('content',"lalalala");
+        // $this -> smarty -> display('index/Index/welcome');
         $welcome = new View("/index/Index/welcome/");
     }
 
