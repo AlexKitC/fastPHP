@@ -19,7 +19,7 @@ class Redis{
 
     public function __construct($option = []){
         if (!extension_loaded('redis')) {
-            throw new \BadFunctionCallException('not support: redis');
+            throw new \BadFunctionCallException('please open redis extends!');
         }
         if(!empty($option)){
             $this -> options = array_merge($this -> option,$option);
