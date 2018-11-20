@@ -3,6 +3,9 @@ namespace controller;
 class Controller{
     public $smarty;
     public function __construct(){
-        $this -> smarty = new \Smarty();
+        if(SMARTY_ENGINE_TURN == 'TRUE'){
+            $this -> smarty = new \Smarty();
+        }
     }
+        
 }
