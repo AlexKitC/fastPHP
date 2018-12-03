@@ -14,7 +14,7 @@
 ####              3.界面下方的debug窗口绑定在\View\View 上；（当且仅当VIEW_ENGINE_TURN为开的时候）因而即使APP_DEBUG_TURN => TRUE 也需要在对应方                     法体内实例化相应html模板才能显示      
 ####              4.类\Db\Db 采用php扩展 php_pdo_mysql 封装，请自行开启该扩展,（有空我会用单例模式重写Db类，同时继续添加事务的支持）
 ####              5.alex/functions.php 为全局公共函数文件，方便业务开发，可自行扩展
-####              6.推荐使用php 7.2以上版本（搭配nginx或者swoole httpServer）获得极致性能体验 :)
+####              6.推荐使用php 7.2以上版本（搭配nginx或者workerman httpServer swoole httpServer）获得极致性能体验 :)
 
 
 ### plans
