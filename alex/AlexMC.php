@@ -78,7 +78,7 @@ class AlexMC{
                                         $params[$paramsArr[$k-1]] = $paramsArr[$k];
                                     }
                                 }
-                                $_GET = $params;
+                                $_SERVER['_GET'] = $params;
                                 $Controller -> $action();
                             }else{//参数个数异常
                                 die('ERROR: unexpected params\'s number');
