@@ -7,7 +7,7 @@ class Index{
             'fname'   =>   'AlexMC',
             'author'  =>   'Alex-黑白',
             'qq'      =>   '392999164',
-            'version' =>   '1.0.0',
+            'version' =>   APP_VERSION,
             'content' =>   'just free yourself :)'
          ]);
     }
