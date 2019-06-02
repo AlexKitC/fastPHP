@@ -8,11 +8,13 @@ namespace Db;
 class Db{
 
     private $conn;//连接句柄
-    private $sql;
-    private $table;
+    private $sql;//sql语句
+    private $table;//操作表名
     private $tmp_cost;//初始开销
 
-    public function __construct($table){
+    static private $instance;//连接实例
+
+    private function __construct($table){
         if(!class_exists('pdo')){
             die('错误！当前环境未开启php_pdo_mysql扩展');
         }else{
@@ -27,6 +29,23 @@ class Db{
                 echo $e->getMessage();
             }
         }
+    }
+
+    //防止对象克隆
+    private function __clone() {
+
+    }
+
+    /**
+     * 获取db连接实例
+     */
+    static public function getInstance($table) {
+        //不存在则new实例
+        if(!self::$instance instanceof self) {
+            self::$instance = new self($table);
+        }
+        //存在直接返回
+        return self::$instance;
     }
 
     /**
@@ -167,7 +186,7 @@ class Db{
     public function delete($where){
         $this -> sql = "DELETE FROM ".$this -> table." WHERE ".$where;
         $res = $this -> conn -> exec($this -> sql);
-        $this -> dbLog($sql,round((microtime(true)-$this -> tmp_cost),5));
+        $this -> dbLog($this -> sql,round((microtime(true)-$this -> tmp_cost),5));
         return $res;
     }
 

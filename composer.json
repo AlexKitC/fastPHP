@@ -1,0 +1,12 @@
+{
+    "autoload": {
+        "classmap": [
+            "application",
+            "extends",
+            "vendor"
+        ]
+    },
+    "require": {
+        "topthink/think-template": "^2.0"
+    }
+}

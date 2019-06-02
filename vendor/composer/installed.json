@@ -1,0 +1,46 @@
+[
+    {
+        "name": "topthink/think-template",
+        "version": "v2.0.1",
+        "version_normalized": "2.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/top-think/think-template.git",
+            "reference": "aee66382c62610b11f0694df8b2aef1ba32f064d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/top-think/think-template/zipball/aee66382c62610b11f0694df8b2aef1ba32f064d",
+            "reference": "aee66382c62610b11f0694df8b2aef1ba32f064d",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=7.1.0"
+        },
+        "time": "2019-02-20T06:02:13+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "think\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "liu21st",
+                "email": "liu21st@gmail.com"
+            }
+        ],
+        "description": "the php template engine"
+    }
+]

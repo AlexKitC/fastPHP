@@ -6,21 +6,8 @@ namespace AlexMC;
  * @QQ 392999164
  */
 require_once "functions.php";
-if(DB_ENGINE_TURN == 'TRUE'){
-    require_once APP_PATH."/alex/Db.php";
-}
-
-if(VIEW_ENGINE_TURN == 'TRUE'){
-    require_once APP_PATH."/alex/View.php";
-}
-
-if(REDIS_ENGINE_TURN == 'TRUE'){
-    require_once APP_PATH."/extends/redis/Redis.php";
-}
-if(SMARTY_ENGINE_TURN == 'TRUE'){
-    require APP_PATH.'/extends/smarty/libs/Smarty.class.php'; 
-    require APP_PATH.'/alex/Controller.php'; 
-}
+require_once APP_PATH."/alex/Db.php";
+require APP_PATH.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 
 class AlexMC{
@@ -53,7 +40,6 @@ class AlexMC{
                 $controller = $controllerName;
                 $_SERVER['c'] = $controller;
                 if($this -> isController($moudle,$controller)){//若存在控制器则实例化该控制器类
-                    include('./application/'.$moudle.'/controller/'.$controller.EXT);
                     $ControllerObjStr = '\application\controller\\'.$controller;
                     $Controller = new $ControllerObjStr();
                     //执行对应方法
@@ -117,7 +103,7 @@ class AlexMC{
      * $param $moudle 需要检测的模块名
      */
     public function isMoudle($moudle){
-        if(!is_dir("./application/".$moudle)){
+        if(!is_dir(APP_PATH."application/".$moudle)){
             return false;
         }else{
             return true;
@@ -130,7 +116,7 @@ class AlexMC{
      * @param $controller 需要检测的控制器名
      */
     public function isController($moudle,$controller){
-        if(!file_exists('./application/'.$moudle.'/controller/'.$controller.EXT)){
+        if(!file_exists(APP_PATH.'application/'.$moudle.'/controller/'.$controller.EXT)){
             return false;
         }else{
             return true;
