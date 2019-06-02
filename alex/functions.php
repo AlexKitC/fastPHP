@@ -17,14 +17,14 @@ if(!function_exists("dump")){
     }
 }
 
-    /**
-     * @Function 生成指定长度的随机int数
-     * @param $len 长度
-     * @return String 
-     */
-if(!function_exists("make_rand_num")){
+/**
+ * @Function 生成指定长度的随机int数
+ * @param $len 长度
+ * @return String 
+ */
+if(!function_exists("makeRandNumber")){
     
-    function make_rand_num($len){
+    function makeRandNumber($len){
         $arr = [];
         while(count($arr) < $len)
         {
@@ -34,3 +34,4 @@ if(!function_exists("make_rand_num")){
         return implode("",$arr);
     }
 }
+

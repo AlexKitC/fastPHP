@@ -45,6 +45,8 @@ class AlexMC{
                     //执行对应方法
                     $action = empty($urlArray[2]) ? APP_ACTION : $urlArray[2];
                     $_SERVER['a'] = $action;
+                    header('X-Powered-By: AlexMC v'.APP_VERSION);
+                    header('Server: AlexMC Author QQ:392999164');
                     if($this -> isAction($Controller,$action)){//检测方法是否存在
                         //解析参数
                         $paramsArr = [];

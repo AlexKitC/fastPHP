@@ -9,6 +9,7 @@ return array(
     'ComposerAutoloaderInit5df93cffc06290b2d0e69a46cd809d27' => $vendorDir . '/composer/autoload_real.php',
     'Composer\\Autoload\\ClassLoader' => $vendorDir . '/composer/ClassLoader.php',
     'Composer\\Autoload\\ComposerStaticInit5df93cffc06290b2d0e69a46cd809d27' => $vendorDir . '/composer/autoload_static.php',
+    'application\\Controller' => $baseDir . '/application/Controller.php',
     'application\\View' => $baseDir . '/application/View.php',
     'application\\controller\\Index' => $baseDir . '/application/index/controller/Index.php',
     'application\\controller\\Login' => $baseDir . '/application/index/controller/Login.php',

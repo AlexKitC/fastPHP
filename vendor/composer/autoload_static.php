@@ -24,6 +24,7 @@ class ComposerStaticInit5df93cffc06290b2d0e69a46cd809d27
         'ComposerAutoloaderInit5df93cffc06290b2d0e69a46cd809d27' => __DIR__ . '/..' . '/composer/autoload_real.php',
         'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
         'Composer\\Autoload\\ComposerStaticInit5df93cffc06290b2d0e69a46cd809d27' => __DIR__ . '/..' . '/composer/autoload_static.php',
+        'application\\Controller' => __DIR__ . '/../..' . '/application/Controller.php',
         'application\\View' => __DIR__ . '/../..' . '/application/View.php',
         'application\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
         'application\\controller\\Login' => __DIR__ . '/../..' . '/application/index/controller/Login.php',

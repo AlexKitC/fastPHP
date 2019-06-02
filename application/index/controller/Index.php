@@ -1,6 +1,6 @@
 <?php
 namespace application\controller;
-class Index{
+class Index extends \application\Controller{
 
     public function index(){
         return new \application\View("index/Index/index",[
@@ -15,9 +15,6 @@ class Index{
     public function index_do(){
         $res = \Db\Db::getInstance('company') -> query(["*"],"id<8","","id desc");
         dump($res);
-    }
-    public function test(){
-        $index = new View("/index/Index/test");
     }
 
 }

@@ -9,8 +9,8 @@ return $config = [
      * 注意：！！！带有*_TURN的配置为TRUE，框架才会去引入对应文件以及实例化对应类 bool严格区分大小写
      * 为FALSE 框架不会引入对应文件从而减少开销，获得更快的速度
      */
-    'APP_DEBUG_TURN'     => 'TRUE',//页面下方的debug 控制台,debug窗口绑定在View视图上；需要实例化View类方可显示debug
-    'DB_LOG_TURN'        => 'FALSE',//数据库日志记录(位置：'./logs/db/*.log') 此选项不建议开启,因为mysql客户端已经记录有日志，仅方便本地查阅sql语句用
+    'APP_DEBUG_TURN' => 'TRUE',//页面下方的debug 控制台,debug窗口绑定在View视图上；需要实例化View类方可显示debug
+    'DB_LOG_TURN'    => 'FALSE',//数据库日志记录(位置：'./logs/db/*.log') 此选项不建议开启,因为mysql客户端已经记录有日志，仅方便本地查阅sql语句用
 
     /**
      * 路由的默认mvc
@@ -31,6 +31,11 @@ return $config = [
     /**
      * Redis相关
      */
-    'REDIS_ENGINE_TURN'          => 'TRUE',
+    'REDIS_ENGINE_TURN'   => 'TRUE',
+
+    /**
+     * Cookie相关
+     */
+    'COOKIE_EXPIRE'  => 7200
 
 ];
