@@ -6,7 +6,7 @@ class View {
         'cache_path'	=>	APP_PATH.'./runtime/',
         'view_suffix'   =>	'.html',
     ];
-    public function __construct(string $pathinfo,array $data) {
+    public function __construct(string $pathinfo,array $data=[]) {
         $template = new \think\Template($this -> config);
         $template->assign("dirRoot",APP_PATH);
         foreach($data as $k => $v) {
