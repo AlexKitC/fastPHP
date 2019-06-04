@@ -1,11 +1,11 @@
 <?php
 namespace application\controller;
 
-use View\View;
+use application\View;
 
 class Login{
     public function login(){
-        $login = new View("/index/Login/login",FALSE);
+        $login = new View("/index/Login/login");
     }
     public function login_api(){
         $param = $_POST;
