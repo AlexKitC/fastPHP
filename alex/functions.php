@@ -35,3 +35,15 @@ if(!function_exists("makeRandNumber")){
     }
 }
 
+/**
+ * @Function 输出验证码
+ */
+if(!function_exists("captcha")){
+    
+    function captcha(){
+        $builder = new Gregwar\Captcha\CaptchaBuilder();
+        $builder->build();
+        return $builder;
+    }
+}
+

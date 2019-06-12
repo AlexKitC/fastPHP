@@ -1,18 +1,17 @@
 <?php
 namespace application\controller;
-use Gregwar\Captcha\CaptchaBuilder;
 class Index extends \application\Controller{
 
     public function index(){
-        $builder = new CaptchaBuilder;
-        $builder->build();
+        $captcha = captcha();
+        // echo $captcha -> getPhrase();//获取生成图片中的验证码
         return new \application\View("index/Index/index",[
             'fname'   =>   'AlexMC',
             'author'  =>   'Alex-黑白',
             'qq'      =>   '392999164',
             'version' =>   APP_VERSION,
             'content' =>   'just free yourself :)',
-            'builder' => $builder
+            'builder' =>   $captcha
          ]);
     }
 
