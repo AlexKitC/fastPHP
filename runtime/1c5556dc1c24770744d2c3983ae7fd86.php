@@ -1,4 +1,4 @@
-<?php /*a:1:{s:59:"E:\code\php\AlexMC\/application/index/view/Index/index.html";i:1559457570;}*/ ?>
+<?php /*a:1:{s:59:"E:\code\php\AlexMC\/application/index/view/Index/index.html";i:1560348359;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +18,7 @@
             <h4>QQ： <a href="javascrit:void(0)"><?php echo htmlentities($qq); ?></a></h4>
             <h4>version： <a href="javascrit:void(0)"><?php echo htmlentities($version); ?></a></h4>
             <h3><?php echo htmlentities($content); ?></h3>
+            <img src="<?php echo $builder->inline(); ?>" />
         </div>
     </div>
 </body>
