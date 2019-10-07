@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/framework/css/bootstrap.min.css">
+    <script src="/framework/js/jquery.min.js"></script>
+    <script src="/framework/js/bootstrap.min.js"></script>
+    <title><?php echo $title;?></title>
+</head>
+<style>
+    *{margin: 0;padding: 0;}
+    .msgInfo{background-color:white;width: 100%;margin: 0 auto 440px auto;padding: 120px 0;}
+    #bottomWrap{position: fixed;width: 100%;bottom: -20px;}
+    .tab-pane{height: 320px;overflow-y: scroll;}
+    .glyphicon-chevron-down,.glyphicon-chevron-up{float: right;cursor: pointer;}
+</style>
+<body>
+    <div class="msgInfo">
+        <?php echo $msg;?>
+    </div>
+    <?php if(config('debug_window') == true){ ;?>
+        <?php include("debug.html");?>
+    <?php } ;?>
+</body>
+<script>
+window.onload = function() {
+    
+}
+</script>
+</html>
