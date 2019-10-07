@@ -1,13 +1,12 @@
 {
-    "autoload": {
-        "classmap": [
-            "application",
-            "extends",
-            "vendor"
+    "autoload" : {
+        "psr-4": {
+            "App\\"  : "app/",
+            "Core\\" : "core/"
+        },
+        "files" : [
+            "common/functions.php",
+            "common/helper.php"
         ]
-    },
-    "require": {
-        "topthink/think-template": "^2.0",
-        "gregwar/captcha": "1.*"
     }
 }

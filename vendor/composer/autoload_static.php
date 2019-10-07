@@ -4,87 +4,40 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5df93cffc06290b2d0e69a46cd809d27
+class ComposerStaticInit1c4a646fbc25d06caaef357b9e22e220
 {
+    public static $files = array (
+        '417fe62f0d797e28784f4608633ae341' => __DIR__ . '/../..' . '/common/functions.php',
+        'b0bb28d4fd1217fce1b0755b3211f6a6' => __DIR__ . '/../..' . '/common/helper.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
-        't' => 
+        'C' => 
         array (
-            'think\\' => 6,
+            'Core\\' => 5,
         ),
-        'S' => 
+        'A' => 
         array (
-            'Symfony\\Component\\Finder\\' => 25,
-        ),
-        'G' => 
-        array (
-            'Gregwar\\' => 8,
+            'App\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'think\\' => 
+        'Core\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/think-template/src',
+            0 => __DIR__ . '/../..' . '/core',
         ),
-        'Symfony\\Component\\Finder\\' => 
+        'App\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/finder',
+            0 => __DIR__ . '/../..' . '/app',
         ),
-        'Gregwar\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/gregwar/captcha/src/Gregwar',
-        ),
-    );
-
-    public static $classMap = array (
-        'ComposerAutoloaderInit5df93cffc06290b2d0e69a46cd809d27' => __DIR__ . '/..' . '/composer/autoload_real.php',
-        'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
-        'Composer\\Autoload\\ComposerStaticInit5df93cffc06290b2d0e69a46cd809d27' => __DIR__ . '/..' . '/composer/autoload_static.php',
-        'Gregwar\\Captcha\\CaptchaBuilder' => __DIR__ . '/..' . '/gregwar/captcha/src/Gregwar/Captcha/CaptchaBuilder.php',
-        'Gregwar\\Captcha\\CaptchaBuilderInterface' => __DIR__ . '/..' . '/gregwar/captcha/src/Gregwar/Captcha/CaptchaBuilderInterface.php',
-        'Gregwar\\Captcha\\ImageFileHandler' => __DIR__ . '/..' . '/gregwar/captcha/src/Gregwar/Captcha/ImageFileHandler.php',
-        'Gregwar\\Captcha\\PhraseBuilder' => __DIR__ . '/..' . '/gregwar/captcha/src/Gregwar/Captcha/PhraseBuilder.php',
-        'Gregwar\\Captcha\\PhraseBuilderInterface' => __DIR__ . '/..' . '/gregwar/captcha/src/Gregwar/Captcha/PhraseBuilderInterface.php',
-        'Symfony\\Component\\Finder\\Comparator\\Comparator' => __DIR__ . '/..' . '/symfony/finder/Comparator/Comparator.php',
-        'Symfony\\Component\\Finder\\Comparator\\DateComparator' => __DIR__ . '/..' . '/symfony/finder/Comparator/DateComparator.php',
-        'Symfony\\Component\\Finder\\Comparator\\NumberComparator' => __DIR__ . '/..' . '/symfony/finder/Comparator/NumberComparator.php',
-        'Symfony\\Component\\Finder\\Exception\\AccessDeniedException' => __DIR__ . '/..' . '/symfony/finder/Exception/AccessDeniedException.php',
-        'Symfony\\Component\\Finder\\Exception\\DirectoryNotFoundException' => __DIR__ . '/..' . '/symfony/finder/Exception/DirectoryNotFoundException.php',
-        'Symfony\\Component\\Finder\\Finder' => __DIR__ . '/..' . '/symfony/finder/Finder.php',
-        'Symfony\\Component\\Finder\\Gitignore' => __DIR__ . '/..' . '/symfony/finder/Gitignore.php',
-        'Symfony\\Component\\Finder\\Glob' => __DIR__ . '/..' . '/symfony/finder/Glob.php',
-        'Symfony\\Component\\Finder\\Iterator\\CustomFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/CustomFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\DateRangeFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/DateRangeFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\DepthRangeFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/DepthRangeFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\ExcludeDirectoryFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/ExcludeDirectoryFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\FileTypeFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/FileTypeFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\FilecontentFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/FilecontentFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\FilenameFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/FilenameFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\MultiplePcreFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/MultiplePcreFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\PathFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/PathFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\RecursiveDirectoryIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/RecursiveDirectoryIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\SizeRangeFilterIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/SizeRangeFilterIterator.php',
-        'Symfony\\Component\\Finder\\Iterator\\SortableIterator' => __DIR__ . '/..' . '/symfony/finder/Iterator/SortableIterator.php',
-        'Symfony\\Component\\Finder\\SplFileInfo' => __DIR__ . '/..' . '/symfony/finder/SplFileInfo.php',
-        'Test\\CaptchaBuilderTest' => __DIR__ . '/..' . '/gregwar/captcha/tests/CaptchaBuilderTest.php',
-        'application\\Controller' => __DIR__ . '/../..' . '/application/Controller.php',
-        'application\\View' => __DIR__ . '/../..' . '/application/View.php',
-        'application\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
-        'application\\controller\\Login' => __DIR__ . '/../..' . '/application/index/controller/Login.php',
-        'redis\\Redis' => __DIR__ . '/../..' . '/extends/redis/Redis.php',
-        'think\\Template' => __DIR__ . '/..' . '/topthink/think-template/src/Template.php',
-        'think\\template\\TagLib' => __DIR__ . '/..' . '/topthink/think-template/src/template/TagLib.php',
-        'think\\template\\driver\\File' => __DIR__ . '/..' . '/topthink/think-template/src/template/driver/File.php',
-        'think\\template\\exception\\TemplateNotFoundException' => __DIR__ . '/..' . '/topthink/think-template/src/template/exception/TemplateNotFoundException.php',
-        'think\\template\\taglib\\Cx' => __DIR__ . '/..' . '/topthink/think-template/src/template/taglib/Cx.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5df93cffc06290b2d0e69a46cd809d27::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5df93cffc06290b2d0e69a46cd809d27::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit5df93cffc06290b2d0e69a46cd809d27::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1c4a646fbc25d06caaef357b9e22e220::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1c4a646fbc25d06caaef357b9e22e220::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
