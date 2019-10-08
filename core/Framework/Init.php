@@ -76,12 +76,6 @@ class Init
             try{
                 $errorMessage = self::setMyErrorHandler();
                 $controllerInstance->$method();
-                var_dump($errorMessage);
-                // $errorMessage = error_get_last();
-                // if(!empty($errorMessage)) {
-                //     $msg = '[\'message\']:'.$errorMessage['message']."<br />['file']:".$errorMessage['file']."<br />['line']:".$errorMessage['line'];
-                //     self::showErrorTpl($msg);
-                // }
             }catch(\Exception $e) {
                 echo $e->getMessage();
             }catch(\Error $e) {
@@ -112,7 +106,7 @@ class Init
      * @param object $controllerInstance 控制器方法实例
      * @param string $func 方法名
      */
-    private static function checkFuncExist(object $controllerInstance, string $func)
+    private static function checkFuncExist($controllerInstance, string $func)
     {
         if(method_exists($controllerInstance, $func)) {
             return true;
@@ -156,18 +150,18 @@ class Init
             $msg = '';
             switch ($errno) {
                 case E_NOTICE:
-                    $msg = '[\'message\']:'.$errstr."<br />['file']:".$errfile."<br />['line']:".$errline;
+                    $msg .= '[\'level\']:notice<br />';
                     break;
                 case E_ERROR:
-                    $msg = '[\'message\']:'.$errstr."<br />['file']:".$errfile."<br />['line']:".$errline;
+                    $msg .= '[\'level\']:error<br />';
                     break;
                 case E_WARNING:
-                    $msg = '[\'message\']:'.$errstr."<br />['file']:".$errfile."<br />['line']:".$errline;
+                    $msg .= '[\'level\']:warning<br />';
                     break;
                 default:
-                    $msg = '[\'message\']:'.$errstr."<br />['file']:".$errfile."<br />['line']:".$errline;
                     break;
             }
+            $msg .= '[\'message\']:'.$errstr."<br />['file']:".$errfile."<br />['line']:".$errline.'<br />[\'info\']:'.getPHPFileLine($errfile,$errline);
             self::showErrorTpl($msg);
             //日志记录根据级别配置
         });

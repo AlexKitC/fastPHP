@@ -113,3 +113,27 @@ if(!function_exists('url'))
         }
     }
 }
+
+if(!function_exists('getLine'))
+{
+    /**
+     * 获取指定文件行内容
+     */
+    function getPHPFileLine($file, $line, $length = 40960){
+        $returnTxt = null;
+        $i = 1;
+        $handle = @fopen($file, "r");
+        if ($handle) {
+            while (!feof($handle)) {
+                $buffer = fgets($handle, $length);
+                if($line == $i) {
+                    $returnTxt = htmlspecialchars($buffer);
+                    break;
+                }
+                $i++;
+            }
+            fclose($handle);
+        }
+        return $returnTxt;
+    }
+}
