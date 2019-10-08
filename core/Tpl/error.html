@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/framework/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/framework/css/animate.min.css">
     <script src="/framework/js/jquery.min.js"></script>
     <script src="/framework/js/bootstrap.min.js"></script>
     <title>fastPHP 错误</title>
@@ -16,7 +17,7 @@
     .glyphicon-chevron-down,.glyphicon-chevron-up{float: right;cursor: pointer;}
 </style>
 <body>
-    <div class="msgInfo">
+    <div class="msgInfo fadeInUp animated">
         <?php echo $errorMsg;?>
     </div>
     <?php if(config('debug_window') == true){ ;?>
