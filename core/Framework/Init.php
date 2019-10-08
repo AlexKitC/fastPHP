@@ -29,11 +29,6 @@ class Init
     }
     
 
-    private static function getClassFile(array $route)
-    {
-
-    }
-
     /**
      * 执行请求方法
      * @param string $request_uri
@@ -74,12 +69,22 @@ class Init
         $controllerInstance = new $classNamespace();
         if(self::checkFuncExist($controllerInstance, $method)) {
             try{
-                $errorMessage = self::setMyErrorHandler();
+                self::setMyErrorHandler();
                 $controllerInstance->$method();
             }catch(\Exception $e) {
-                echo $e->getMessage();
+                $file = $e->getFile();
+                $line = $e->getLine();
+                $message = $e->getMessage();
+                $msg = '[\'level\'] : error<br />[\'message\'] : '.$message."<br />['file'] : ".$file."<br />['line'] : ".$line.'<br />[\'info\'] : '.getPHPFileLine($file,$line).'<br />[\'trace\'] : '.$e->getTraceAsString();
+                \Core\Driver\Log::getInstance()->error($message.' in file '.$file.' on line '.$line."\r\n[trace]\r\n".$e->getTraceAsString());
+                self::showErrorTpl($msg);
             }catch(\Error $e) {
-                echo $e->getMessage();
+                $file = $e->getFile();
+                $line = $e->getLine();
+                $message = $e->getMessage();
+                $msg = '[\'level\'] : error<br />[\'message\'] : '.$message."<br />['file'] : ".$file."<br />['line'] : ".$line.'<br />[\'info\'] : '.getPHPFileLine($file,$line).'<br />[\'trace\'] : '.$e->getTraceAsString();
+                \Core\Driver\Log::getInstance()->error($message.' in file '.$file.' on line '.$line."\r\n[trace]\r\n".$e->getTraceAsString());
+                self::showErrorTpl($msg);
             }
             
         }else {
@@ -116,7 +121,7 @@ class Init
     }
 
     /**
-     * 框架层错误debug输出
+     * 框架层错误error输出
      * @param string $errorMsg 错误信息
      */
     private static function showErrorTpl(string $errorMsg = '')
@@ -126,6 +131,36 @@ class Init
             include APP_ROOT.'/core/Tpl/error.html';die;
         }else {
             echo $errorMsg;die;
+        }
+        
+    }
+
+    /**
+     * 框架层错误warning输出
+     * @param string $warningMsg 警告信息
+     */
+    private static function showWarningTpl(string $warningMsg = '')
+    {
+        if(config('debug') == true) {
+            self::assign('warningMsg', $warningMsg);
+            include APP_ROOT.'/core/Tpl/warning.html';die;
+        }else {
+            echo $warningMsg;die;
+        }
+        
+    }
+
+    /**
+     * 框架层错误notice输出
+     * @param string $noticeMsg 提示信息
+     */
+    private static function showNoticeTpl(string $noticeMsg = '')
+    {
+        if(config('debug') == true) {
+            self::assign('noticeMsg', $noticeMsg);
+            include APP_ROOT.'/core/Tpl/notice.html';die;
+        }else {
+            echo $noticeMsg;die;
         }
         
     }
@@ -150,20 +185,26 @@ class Init
             $msg = '';
             switch ($errno) {
                 case E_NOTICE:
-                    $msg .= '[\'level\']:notice<br />';
+                    $msg = '[\'level\'] : notice<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
+                    \Core\Driver\Log::getInstance()->notice($errstr.' in file '.$errfile.' on line '.$errline);
+                    self::showNoticeTpl($msg);
                     break;
                 case E_ERROR:
-                    $msg .= '[\'level\']:error<br />';
+                    $msg = '[\'level\'] : error<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
+                    \Core\Driver\Log::getInstance()->error($errstr.' in file '.$errfile.' on line '.$errline);
+                    self::showErrorTpl($msg);
                     break;
                 case E_WARNING:
-                    $msg .= '[\'level\']:warning<br />';
+                    $msg = '[\'level\'] : warning<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
+                    \Core\Driver\Log::getInstance()->warning($errstr.' in file '.$errfile.' on line '.$errline);
+                    self::showWarningTpl($msg);
                     break;
                 default:
+                    $msg = '[\'level\'] : warning<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);;
+                    self::showErrorTpl($msg);
                     break;
             }
-            $msg .= '[\'message\']:'.$errstr."<br />['file']:".$errfile."<br />['line']:".$errline.'<br />[\'info\']:'.getPHPFileLine($errfile,$errline);
-            self::showErrorTpl($msg);
-            //日志记录根据级别配置
+            
         });
     }
 
