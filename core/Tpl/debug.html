@@ -1,4 +1,4 @@
-<div class="panel panel-default" id="bottomWrap">
+<div class="panel panel-default fadeInUp animated" id="bottomWrap">
         <div class="panel-heading">fastPHP v<?php echo APP_VERSION;?> 的DEBUG控制台<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>
         <div class="panel-body">
             <ul class="nav nav-tabs">
@@ -9,7 +9,7 @@
                 <li role="presentation"><a href="javascript:void(0)">关于</a></li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active">
+                <div class="tab-pane active fadeInUp animated">
                     <ul class="list-group">
                         <?php foreach(get_included_files() as $k=>$v) {;?>
                         <li class="list-group-item"><?php echo $k+1;?>. <?php echo $v;?></li>
@@ -39,9 +39,9 @@
                         </ul>
                 </div>
                 <div class="tab-pane">
-                    <ul class="list-group">
+                    <ul class="list-group fadeInDown animated">
                         <li class="list-group-item">
-                            <img src="author.jpg" alt=""> fastPHP <?php echo APP_VERSION;?>
+                            <img src="author.jpg" alt=""> <?php echo APP_NAME;?> <?php echo APP_VERSION;?>
                         </li>
                         <li class="list-group-item">
                             author: Alex-黑白

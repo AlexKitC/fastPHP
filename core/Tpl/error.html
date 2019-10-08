@@ -4,19 +4,21 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/framework/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/framework/css/animate.min.css">
     <script src="/framework/js/jquery.min.js"></script>
     <script src="/framework/js/bootstrap.min.js"></script>
     <title>fastPHP 错误</title>
 </head>
 <style>
     *{margin: 0;padding: 0;}
-    .msgInfo{background-color: brown;width: 100%;margin: 0 auto 440px auto;padding: 32px 0;color: floralwhite;line-height: 32px;font-size: 20px;}
+    body{background-color: brown;}
+    .msgInfo{width: 100%;margin: 0 auto 440px auto;padding: 32px 0;color: floralwhite;line-height: 32px;font-size: 20px;}
     #bottomWrap{position: fixed;width: 100%;bottom: -20px;}
     .tab-pane{height: 320px;overflow-y: scroll;}
     .glyphicon-chevron-down,.glyphicon-chevron-up{float: right;cursor: pointer;}
 </style>
 <body>
-    <div class="msgInfo">
+    <div class="msgInfo bounceInRight animated">
         <?php echo $errorMsg;?>
     </div>
     <?php if(config('debug_window') == true){ ;?>

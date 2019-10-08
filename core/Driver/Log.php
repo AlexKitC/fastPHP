@@ -4,9 +4,10 @@ use Core\Driver\Interfaces\LogInterface;
 class Log implements LogInterface
 {
     private static $instance;
-
+    private static $logLevel;
     private function __construct()
     {
+        self::$logLevel = strtolower(config('log_level'));
         self::createLogFile();
     }
 
@@ -20,7 +21,22 @@ class Log implements LogInterface
 
     public function info(string $message, array $context = [])
     {
-        self::writeLogIntoFile(self::createLogData($message, 'info'));
+        if(self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'info'));
+    }
+
+    public function notice(string $message, array $context = [])
+    {
+        if(self::$logLevel == 'notice' || self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'notice'));
+    }
+
+    public function warning(string $message, array $context = [])
+    {
+        if(self::$logLevel == 'warning' || self::$logLevel == 'notice' || self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'warning'));
+    }
+
+    public function error(string $message, array $context = [])
+    {
+        self::writeLogIntoFile(self::createLogData($message, 'error'));
     }
 
     private static function logFileName()

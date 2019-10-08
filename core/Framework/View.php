@@ -1,7 +1,7 @@
 <?php
 namespace Core\Framework;
-class View {
-
+class View 
+{
     private $suffix;
     public  $value;
     private static $instance;

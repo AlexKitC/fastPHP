@@ -4,5 +4,5 @@ return $config = [
     'debug_window'       => true, //debug控制台
 
     'suffix'             => '.html', //模板文件后缀
-    'log_level'          => 'notice',//可选值 [notice | warning | error]
+    'log_level'          => 'notice',//可选值 [info | notice | warning | error]
 ];

@@ -22,4 +22,12 @@ class Controller
     {
         
     }
+
+    /**
+     * 获取请求类型
+     */
+    public function getRequestType()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
 }
