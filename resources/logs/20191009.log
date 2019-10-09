@@ -1,0 +1,4 @@
+
+[2019-10-09 11:11:14] [warning]
+[timeCost: 0.006877s]
+[message]: Division by zero in file /mnt/h/code/php/fastPHP/app/Controllers/Home/Index.php on line 7
