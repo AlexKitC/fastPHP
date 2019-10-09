@@ -37,7 +37,7 @@ class View
                 $html_path_str .= ucfirst($html_path_arr[$i]).'/';
             }elseif($i == $l - 1) {
                 $base_path .= $html_path_str;
-                $base_path .= $html_path_arr[$i].config('suffix');
+                $base_path .= $html_path_arr[$i].$this->suffix;
             }
         }
         if($this->htmlExist($base_path)) {

@@ -1,5 +1,5 @@
 ### author:      Alex-黑白
-### 文档：       [文档地址](http://doc.91mylover.top/)  
+### 文档：       [文档地址](http://doc.91mylover.top/) [该文档为0.0.1版本] 
 ###                             [fastPHP文档](http://doc.91mylover.top/)[待修改]
 ### QQ:          392999164
 ### create date: 2018/10/15
