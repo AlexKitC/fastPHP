@@ -1,10 +1,8 @@
 <?php
 namespace App\Controllers\Home;
 use Core\Framework\Controller;
-use Core\Driver\Log;
 class Index extends Controller
 {
-    
     public function welcome() 
     {
         show('home/index/welcome', [

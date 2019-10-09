@@ -25,6 +25,7 @@ class Init
     {
         self::$config = $config;
         self::$route = $route;
+        self::checkPHPVersion();
         return self::run($_SERVER['REQUEST_URI']);
     }
     
@@ -69,8 +70,22 @@ class Init
         $controllerInstance = new $classNamespace();
         if(self::checkFuncExist($controllerInstance, $method)) {
             try{
-                self::setMyErrorHandler();
-                $controllerInstance->$method();
+                self::setMyErrorHandler();//注册错误异常
+                $context = [
+                    'method'  => $method,
+                    'server'  => [
+                        'http_user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'UNKNOW',
+                        'http_host'       => $_SERVER['HTTP_HOST'] ?? 'UNKNOW',
+                        'redirect_status' => $_SERVER['REDIRECT_STATUS'] ?? 'UNKNOW',
+                        'server_name'     => $_SERVER['SERVER_NAME'] ?? 'UNKNOW',
+                        'server_port'     => $_SERVER['SERVER_PORT'] ?? 'UNKNOW',
+                        'request_method'  => $_SERVER['REQUEST_METHOD'] ?? 'UNKNOW',
+                        'request_uri'     => $_SERVER['REQUEST_URI'] ?? 'UNKNOW',
+                        'query_string'    => $_SERVER['QUERY_STRING'] ?? 'UNKNOW',
+                    ]
+                ];
+                $controllerInstance->context = $context;//保存上下文信息到控制器实例
+                $controllerInstance->$method();//执行控制器实例方法   
             }catch(\Exception $e) {
                 $file = $e->getFile();
                 $line = $e->getLine();
@@ -208,4 +223,11 @@ class Init
         });
     }
 
+    private static function checkPHPVersion()
+    {
+        $version = substr(phpversion(),0,3);
+        if($version < 7.1) {
+            self::showErrorTpl('当前PHP版本: '.$version.' ;请使用7.1以及更新的版本');
+        }
+    }
 }

@@ -3,6 +3,11 @@ namespace Core\Framework;
 class Controller
 {
 
+    public function __construct()
+    {
+
+    }
+
     /**
      * 成功的跳转
      * @param string $msg
@@ -28,6 +33,6 @@ class Controller
      */
     public function getRequestType()
     {
-        return $_SERVER['REQUEST_METHOD'];
+        return $_SERVER['REQUEST_METHOD'] ?? '';
     }
 }
