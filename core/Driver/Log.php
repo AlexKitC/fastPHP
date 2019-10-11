@@ -39,6 +39,11 @@ class Log implements LogInterface
         self::writeLogIntoFile(self::createLogData($message, 'error'));
     }
 
+    public function debug(string $message, array $context = [])
+    {
+        
+    }
+
     private static function logFileName()
     {
         return APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.date("Ymd",time()).'.log';

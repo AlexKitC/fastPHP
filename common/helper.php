@@ -137,3 +137,13 @@ if(!function_exists('getLine'))
         return $returnTxt;
     }
 }
+
+if(!function_exists('showDebug')) {
+    /**
+     * 控制台信息
+     */
+    function showDebug()
+    {
+        include APP_ROOT.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Tpl'.DIRECTORY_SEPARATOR.'debug.html';
+    }
+}
