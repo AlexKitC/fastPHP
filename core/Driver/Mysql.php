@@ -15,7 +15,7 @@ class Mysql
         'host'   => 'localhost',
         'dbname' => 'test',
         'user'   => 'root',
-        'pass'   => 'Lilin392999.'
+        'pass'   => 'xxxx.'
     ];
 
     private function __construct()

@@ -138,11 +138,11 @@ if(!function_exists('getLine'))
     }
 }
 
-if(!function_exists('showDebug')) {
+if(!function_exists('Debug')) {
     /**
      * 控制台信息
      */
-    function showDebug()
+    function Debug()
     {
         include APP_ROOT.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Tpl'.DIRECTORY_SEPARATOR.'debug.html';
     }
