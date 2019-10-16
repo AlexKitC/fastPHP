@@ -1,5 +1,5 @@
 <?php
-// error_reporting(E_ALL);
+
 define('APP_ENTRY',__DIR__);
 define('APP_ROOT',dirname(__DIR__));
 define('APP_MEMORY',memory_get_usage());

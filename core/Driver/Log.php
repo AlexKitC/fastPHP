@@ -1,6 +1,7 @@
 <?php
 namespace Core\Driver;
-use Core\Driver\Interfaces\LogInterface;
+use \Core\Driver\Interfaces\LogInterface;
+use \Core\Framework\Tpl;
 class Log implements LogInterface
 {
     private static $instance;
@@ -8,7 +9,12 @@ class Log implements LogInterface
     private function __construct()
     {
         self::$logLevel = strtolower(config('log_level'));
-        self::createLogFile();
+        try {
+            self::createLogFile();
+        } catch(\Exception $e) {
+            dd($e);
+        }
+        
     }
 
     public static function getInstance()
@@ -79,7 +85,7 @@ class Log implements LogInterface
     private static function createLogFile()
     {
         if(!self::logFileExist()) {
-            file_put_contents(self::logFileName(), '', FILE_APPEND);
+            @fopen(self::logFileName(), "w") or Tpl::showWarningTpl('permission deny to write logFile: '.self::logFileName().'; please check permission of the directory: '.APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs');
         } else {
             return true;
         }

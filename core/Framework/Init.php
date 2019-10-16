@@ -1,11 +1,13 @@
 <?php
 namespace Core\Framework;
 session_start();
+use \Core\Framework\Tpl;
 class Init 
 {
-    public static $config;
-    public static $route;
+    public  static $config;
+    public  static $route;
     private static $instance;
+    private static $ds = DIRECTORY_SEPARATOR;
     private function clone() {}
 
     private function __construct() 
@@ -26,6 +28,12 @@ class Init
         self::$config = $config;
         self::$route = $route;
         self::checkPHPVersion();
+        if($config['debug'] == true) {
+            ini_set("display_errors","On");
+            error_reporting(E_ALL);
+        } else {
+            ini_set("display_errors","Off");
+        }
         return self::run($_SERVER['REQUEST_URI']);
     }
     
@@ -135,64 +143,7 @@ class Init
         }
     }
 
-    /**
-     * 框架层错误error输出
-     * @param string $errorMsg 错误信息
-     */
-    private static function showErrorTpl(string $errorMsg = '')
-    {
-        if(config('debug') == true) {
-            self::assign('errorMsg', $errorMsg);
-            include APP_ROOT.'/core/Tpl/error.html';die;
-        }else {
-            echo $errorMsg;die;
-        }
-        
-    }
-
-    /**
-     * 框架层错误warning输出
-     * @param string $warningMsg 警告信息
-     */
-    private static function showWarningTpl(string $warningMsg = '')
-    {
-        if(config('debug') == true) {
-            self::assign('warningMsg', $warningMsg);
-            include APP_ROOT.'/core/Tpl/warning.html';die;
-        }else {
-            echo $warningMsg;die;
-        }
-        
-    }
-
-    /**
-     * 框架层错误notice输出
-     * @param string $noticeMsg 提示信息
-     */
-    private static function showNoticeTpl(string $noticeMsg = '')
-    {
-        if(config('debug') == true) {
-            self::assign('noticeMsg', $noticeMsg);
-            include APP_ROOT.'/core/Tpl/notice.html';die;
-        }else {
-            echo $noticeMsg;die;
-        }
-        
-    }
     
-    /**
-     * debug页赋值
-     * @param string $key
-     * @param mixed $val 
-     */
-    private static function assign(string $key, $val)
-    {
-        if(array($val)){
-            $arr["$key"] = $val;
-        }else{
-            $arr["$key"] = compact($val);
-        }
-    }
 
     public static function setMyErrorHandler()
     {
@@ -202,21 +153,21 @@ class Init
                 case E_NOTICE:
                     $msg = '[\'level\'] : notice<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
                     \Core\Driver\Log::getInstance()->notice($errstr.' in file '.$errfile.' on line '.$errline);
-                    self::showNoticeTpl($msg);
+                    Tpl::showNoticeTpl($msg);
                     break;
                 case E_ERROR:
                     $msg = '[\'level\'] : error<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
                     \Core\Driver\Log::getInstance()->error($errstr.' in file '.$errfile.' on line '.$errline);
-                    self::showErrorTpl($msg);
+                    Tpl::showErrorTpl($msg);
                     break;
                 case E_WARNING:
                     $msg = '[\'level\'] : warning<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
                     \Core\Driver\Log::getInstance()->warning($errstr.' in file '.$errfile.' on line '.$errline);
-                    self::showWarningTpl($msg);
+                    Tpl::showWarningTpl($msg);
                     break;
                 default:
                     $msg = '[\'level\'] : warning<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);;
-                    self::showErrorTpl($msg);
+                    Tpl::showErrorTpl($msg);
                     break;
             }
             
@@ -230,4 +181,5 @@ class Init
             self::showErrorTpl('当前PHP版本: '.$version.' ;请使用7.1以及更新的版本');
         }
     }
+
 }
