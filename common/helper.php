@@ -144,6 +144,7 @@ if(!function_exists('Debug')) {
      */
     function Debug()
     {
-        include APP_ROOT.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Tpl'.DIRECTORY_SEPARATOR.'debug.html';
+        if(config('debug') == true && config('debug_window') == true) include APP_ROOT.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Tpl'.DIRECTORY_SEPARATOR.'debug.html';
+        
     }
 }
