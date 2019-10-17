@@ -12,7 +12,7 @@ class Log implements LogInterface
         try {
             self::createLogFile();
         } catch(\Exception $e) {
-            dd($e);
+            Tpl::showErrorTpl($e->getMessage());
         }
         
     }

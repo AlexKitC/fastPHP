@@ -16,7 +16,7 @@ class Controller
      */
     public function success(string $msg = '操作成功', int $interval = 3, string $pathinfo)
     {
-        show('success', ['title'=>'成功提示', 'msg'=>$msg, 'interval'=>$interval], false);
+        show('success', ['title'=>'成功提示', 'msg'=>$msg, 'interval'=>$interval], false);die;
     }
 
     /**

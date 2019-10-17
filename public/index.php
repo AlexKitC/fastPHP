@@ -1,4 +1,10 @@
 <?php
+/**
+ * fastPHP 入口文件
+ * @author alex-黑白
+ * @qq     392999164
+ * @param  just free your self :)
+ */
 
 define('APP_ENTRY',__DIR__);
 define('APP_ROOT',dirname(__DIR__));
