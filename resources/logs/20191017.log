@@ -1,0 +1,42 @@
+
+[2019-10-17 09:23:24] [error]
+[timeCost: 0.000482s]
+[message]: Call to private method Core\Framework\Captcha::productCaptcha() from context '' in file /home/fastPHP/common/helper.php on line 158
+[trace]
+#0 /home/fastPHP/app/Controllers/Home/Index.php(8): captcha()
+#1 /home/fastPHP/core/Framework/Init.php(87): App\Controllers\Home\Index->welcome()
+#2 /home/fastPHP/core/Framework/Init.php(53): Core\Framework\Init::parseControllerAndMethod('/Home/Index@wel...')
+#3 /home/fastPHP/core/Framework/Init.php(37): Core\Framework\Init::run('/')
+#4 /home/fastPHP/public/index.php(18): Core\Framework\Init->start(Array, Array)
+#5 {main}
+
+[2019-10-17 09:24:25] [error]
+[timeCost: 0.001959s]
+[message]: Call to private method Core\Framework\Captcha::productCaptcha() from context '' in file /home/fastPHP/common/helper.php on line 158
+[trace]
+#0 /home/fastPHP/app/Controllers/Home/Index.php(8): captcha()
+#1 /home/fastPHP/core/Framework/Init.php(87): App\Controllers\Home\Index->welcome()
+#2 /home/fastPHP/core/Framework/Init.php(53): Core\Framework\Init::parseControllerAndMethod('/Home/Index@wel...')
+#3 /home/fastPHP/core/Framework/Init.php(37): Core\Framework\Init::run('/')
+#4 /home/fastPHP/public/index.php(18): Core\Framework\Init->start(Array, Array)
+#5 {main}
+
+[2019-10-17 09:25:17] [warning]
+[timeCost: 0.00105s]
+[message]: Cannot modify header information - headers already sent by (output started at /home/fastPHP/core/Tpl/debug.html:30) in file /home/fastPHP/core/Framework/Captcha.php on line 55
+
+[2019-10-17 09:25:30] [warning]
+[timeCost: 0.001094s]
+[message]: Cannot modify header information - headers already sent by (output started at /home/fastPHP/core/Tpl/debug.html:30) in file /home/fastPHP/core/Framework/Captcha.php on line 55
+
+[2019-10-17 09:28:42] [warning]
+[timeCost: 0.001637s]
+[message]: Cannot modify header information - headers already sent by (output started at /home/fastPHP/core/Tpl/debug.html:30) in file /home/fastPHP/core/Framework/Captcha.php on line 55
+
+[2019-10-17 09:29:57] [warning]
+[timeCost: 0.001351s]
+[message]: Cannot modify header information - headers already sent by (output started at /home/fastPHP/core/Tpl/debug.html:30) in file /home/fastPHP/core/Framework/Captcha.php on line 55
+
+[2019-10-17 09:33:38] [warning]
+[timeCost: 0.001235s]
+[message]: Cannot modify header information - headers already sent by (output started at /home/fastPHP/core/Tpl/debug.html:30) in file /home/fastPHP/core/Framework/Captcha.php on line 55

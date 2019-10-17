@@ -1,4 +1,7 @@
 <?php
+/**
+ * 此文件为框架提供的助手函数，它可以简化对应命名空间下类方法的调用
+ */
 
 if(!function_exists('dd')) 
 {
@@ -48,11 +51,11 @@ if(!function_exists('config'))
 if(!function_exists('db'))
 {
     /**
-     * 
+     * 获取数据库连接实例
      */
-    function db($conn)
+    function db()
     {
-        \Core\Driver\Mysql::getInstance();
+        return \Core\Driver\Mysql::getInstance();
     }
 }
 
@@ -146,5 +149,19 @@ if(!function_exists('Debug')) {
     {
         if(config('debug') == true && config('debug_window') == true) include APP_ROOT.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Tpl'.DIRECTORY_SEPARATOR.'debug.html';
         
+    }
+}
+
+if(!function_exists('captcha')) {
+    function captcha()
+    {
+        \Core\Framework\Captcha::getInstance()->productCaptcha();
+    }
+}
+
+if(!function_exists('captchaImg')) {
+    function captchaImg()
+    {
+        echo "<a href='javascript:void(0)' rel='external nofollow'><img src='/captcha' alt='' id='captcha_img'  onclick="."document.getElementById('captcha_img').src='/captcha?r=Math.random()'></a>";
     }
 }

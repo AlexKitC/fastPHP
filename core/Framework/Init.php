@@ -46,17 +46,21 @@ class Init
     {
         $uriArr = parse_url($request_uri);
         $request_uri = str_replace(strtolower(config('suffix')), '', $uriArr['path']);
-        $route = self::$route;
-        $flag = false;
-        foreach($route as $k=>$v) {
-            if($k == $request_uri) {
-                self::parseControllerAndMethod($route[$k]);
-                $flag = true;
-                break;
+        if($request_uri == '/captcha') {
+            captcha();
+        } else {
+            $route = self::$route;
+            $flag = false;
+            foreach($route as $k=>$v) {
+                if($k == $request_uri) {
+                    self::parseControllerAndMethod($route[$k]);
+                    $flag = true;
+                    break;
+                }
             }
-        }
-        if(!$flag) {
-            self::showErrorTpl('未匹配到路由：'.$request_uri);
+            if(!$flag) {
+                Tpl::showErrorTpl('未匹配到路由：'.$request_uri);
+            }
         }
     }
 
@@ -81,16 +85,7 @@ class Init
                 self::setMyErrorHandler();//注册错误异常
                 $context = [
                     'method'  => $method,
-                    'server'  => [
-                        'http_user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'UNKNOW',
-                        'http_host'       => $_SERVER['HTTP_HOST'] ?? 'UNKNOW',
-                        'redirect_status' => $_SERVER['REDIRECT_STATUS'] ?? 'UNKNOW',
-                        'server_name'     => $_SERVER['SERVER_NAME'] ?? 'UNKNOW',
-                        'server_port'     => $_SERVER['SERVER_PORT'] ?? 'UNKNOW',
-                        'request_method'  => $_SERVER['REQUEST_METHOD'] ?? 'UNKNOW',
-                        'request_uri'     => $_SERVER['REQUEST_URI'] ?? 'UNKNOW',
-                        'query_string'    => $_SERVER['QUERY_STRING'] ?? 'UNKNOW',
-                    ]
+                    'server'  => self::getServerInfo()
                 ];
                 $controllerInstance->context = $context;//保存上下文信息到控制器实例
                 $controllerInstance->$method();//执行控制器实例方法   
@@ -100,18 +95,18 @@ class Init
                 $message = $e->getMessage();
                 $msg = '[\'level\'] : error<br />[\'message\'] : '.$message."<br />['file'] : ".$file."<br />['line'] : ".$line.'<br />[\'info\'] : '.getPHPFileLine($file,$line).'<br />[\'trace\'] : '.$e->getTraceAsString();
                 \Core\Driver\Log::getInstance()->error($message.' in file '.$file.' on line '.$line."\r\n[trace]\r\n".$e->getTraceAsString());
-                self::showErrorTpl($msg);
+                Tpl::showErrorTpl($msg);
             }catch(\Error $e) {
                 $file = $e->getFile();
                 $line = $e->getLine();
                 $message = $e->getMessage();
                 $msg = '[\'level\'] : error<br />[\'message\'] : '.$message."<br />['file'] : ".$file."<br />['line'] : ".$line.'<br />[\'info\'] : '.getPHPFileLine($file,$line).'<br />[\'trace\'] : '.$e->getTraceAsString();
                 \Core\Driver\Log::getInstance()->error($message.' in file '.$file.' on line '.$line."\r\n[trace]\r\n".$e->getTraceAsString());
-                self::showErrorTpl($msg);
+                Tpl::showErrorTpl($msg);
             }
             
         }else {
-            self::showErrorTpl('class file: '.$classFile.' 不存在 function '.$method.'()');
+            Tpl::showErrorTpl('class file: '.$classFile.' 不存在 function '.$method.'()');
         }
     }
 
@@ -125,7 +120,7 @@ class Init
         if(file_exists($file_path)) {
             return true;
         }else {
-            self::showErrorTpl('File: '.$file_path.'不存在 :(');
+            Tpl::showErrorTpl('File: '.$file_path.'不存在 :(');
         }
     }
 
@@ -178,8 +173,22 @@ class Init
     {
         $version = substr(phpversion(),0,3);
         if($version < 7.1) {
-            self::showErrorTpl('当前PHP版本: '.$version.' ;请使用7.1以及更新的版本');
+            Tpl::showErrorTpl('当前PHP版本: '.$version.' ;请使用7.1以及更新的版本');
         }
+    }
+
+    private static function getServerInfo()
+    {
+        return [
+            'http_user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'UNKNOW',
+            'http_host'       => $_SERVER['HTTP_HOST'] ?? 'UNKNOW',
+            'redirect_status' => $_SERVER['REDIRECT_STATUS'] ?? 'UNKNOW',
+            'server_name'     => $_SERVER['SERVER_NAME'] ?? 'UNKNOW',
+            'server_port'     => $_SERVER['SERVER_PORT'] ?? 'UNKNOW',
+            'request_method'  => $_SERVER['REQUEST_METHOD'] ?? 'UNKNOW',
+            'request_uri'     => $_SERVER['REQUEST_URI'] ?? 'UNKNOW',
+            'query_string'    => $_SERVER['QUERY_STRING'] ?? 'UNKNOW',
+        ];
     }
 
 }
