@@ -40,7 +40,7 @@
                 <div class="tab-pane">
                         <ul class="list-group">
                             <?php foreach($_SERVER as $k=>$v) {;?>
-                                <li class="list-group-item"><?php if(is_string($v)){echo strtolower($k), ' : '.$v};?></li>
+                                <li class="list-group-item"><?php if(is_string($v)) echo strtolower($k).', : '.$v;?></li>
                             <?php };?>
 
                         </ul>
