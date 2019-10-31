@@ -25,27 +25,27 @@ class Log implements LogInterface
         return self::$instance;
     }
 
-    public function info(string $message, array $context = [])
+    public function info($message = null, array $context = [])
     {
         if(self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'info'));
     }
 
-    public function notice(string $message, array $context = [])
+    public function notice($message = null, array $context = [])
     {
         if(self::$logLevel == 'notice' || self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'notice'));
     }
 
-    public function warning(string $message, array $context = [])
+    public function warning($message = null, array $context = [])
     {
         if(self::$logLevel == 'warning' || self::$logLevel == 'notice' || self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'warning'));
     }
 
-    public function error(string $message, array $context = [])
+    public function error($message = null, array $context = [])
     {
         self::writeLogIntoFile(self::createLogData($message, 'error'));
     }
 
-    public function debug(string $message, array $context = [])
+    public function debug($message = null, array $context = [])
     {
         
     }
@@ -55,7 +55,7 @@ class Log implements LogInterface
         return APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.date("Ymd",time()).'.log';
     }
 
-    private static function logFileExist(string $fileName = '')
+    private static function logFileExist(string $fileName = null)
     {
         $fileName = empty($fileName) ? date("Ymd",time()).'.log' : $fileName;
         if(file_exists(APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.$fileName)) {
