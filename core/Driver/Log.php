@@ -2,6 +2,7 @@
 namespace Core\Driver;
 use \Core\Driver\Interfaces\LogInterface;
 use \Core\Framework\Tpl;
+use \Exception as exception;
 class Log implements LogInterface
 {
     private static $instance;
@@ -11,7 +12,7 @@ class Log implements LogInterface
         self::$logLevel = strtolower(config('log_level'));
         try {
             self::createLogFile();
-        } catch(\Exception $e) {
+        } catch(exception $e) {
             Tpl::showErrorTpl($e->getMessage());
         }
         
@@ -25,27 +26,27 @@ class Log implements LogInterface
         return self::$instance;
     }
 
-    public function info($message = null, array $context = [])
+    public function info(string $message = null, array $context = [])
     {
         if(self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'info'));
     }
 
-    public function notice($message = null, array $context = [])
+    public function notice(string $message = null, array $context = [])
     {
         if(self::$logLevel == 'notice' || self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'notice'));
     }
 
-    public function warning($message = null, array $context = [])
+    public function warning(string $message = null, array $context = [])
     {
         if(self::$logLevel == 'warning' || self::$logLevel == 'notice' || self::$logLevel == 'info') self::writeLogIntoFile(self::createLogData($message, 'warning'));
     }
 
-    public function error($message = null, array $context = [])
+    public function error(string $message = null, array $context = [])
     {
         self::writeLogIntoFile(self::createLogData($message, 'error'));
     }
 
-    public function debug($message = null, array $context = [])
+    public function debug(string $message = null, array $context = [])
     {
         
     }
@@ -75,11 +76,16 @@ class Log implements LogInterface
 
     private static function writeLogIntoFile(string $message)
     {
-        if(self::logFileExist()) {
-            file_put_contents(self::logFileName(),$message, FILE_APPEND);
-        } else {
-            throw new \Exception('log file: '.self::logFileName().' not exist!');
+        try {
+            if(self::logFileExist()) {
+                file_put_contents(self::logFileName(),$message, FILE_APPEND);
+            } else {
+                throw new exception('log file: '.self::logFileName().' not exist!');
+            }
+        } catch(exception $e) {
+            die($e->getMessage());
         }
+
     }
 
     private static function createLogFile()
@@ -89,6 +95,7 @@ class Log implements LogInterface
         } else {
             return true;
         }
+        return true;
     }
 
     private function __clone() {}
