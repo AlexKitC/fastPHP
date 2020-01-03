@@ -18,7 +18,7 @@ class Init
     public static function getInstance()
     {
         if(!self::$instance) {
-            return new self();
+            self::$instance = new self();
         }
         return self::$instance;
     }
