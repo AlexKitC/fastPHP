@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Core\Framework;
 use Core\Driver\Log;
+use Exception;
 
 session_start();
 class Init
@@ -37,11 +38,12 @@ class Init
         }
         return self::run($_SERVER['REQUEST_URI']);
     }
-    
+
 
     /**
      * 执行请求方法
      * @param string $request_uri
+     * @throws Exception
      */
     private static function run(string $request_uri)
     {
@@ -64,6 +66,7 @@ class Init
     /**
      * 解析uri到控制器+方法
      * @param string $uri
+     * @throws Exception
      */
     private static function parseControllerAndMethod(string $uri)
     {
@@ -86,7 +89,7 @@ class Init
                 ];
                 $controllerInstance->context = $context;//保存上下文信息到控制器实例
                 $controllerInstance->$method();//执行控制器实例方法   
-            }catch(\Exception $e) {
+            }catch(Exception $e) {
                 self::handleCatchAfter($e);
             }catch(\Error $e) {
                 self::handleCatchAfter($e);
@@ -181,7 +184,7 @@ class Init
     /**
      * 捕获后执行的动作
      * @param $e mixed Exception|Error
-     * @throws \Exception
+     * @throws Exception
      */
     private static function handleCatchAfter($e)
     {
