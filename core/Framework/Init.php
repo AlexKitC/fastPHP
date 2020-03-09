@@ -18,11 +18,7 @@ class Init
 
     public static function getInstance()
     {
-<<<<<<< HEAD
-        if(!self::$instance) {
-=======
         if(!self::$instance instanceof self) {
->>>>>>> v1.0.0
             self::$instance = new self();
         }
         return self::$instance;
@@ -182,11 +178,10 @@ class Init
         ];
     }
 
-<<<<<<< HEAD
-=======
     /**
      * 捕获后执行的动作
      * @param $e mixed Exception|Error
+     * @throws \Exception
      */
     private static function handleCatchAfter($e)
     {
@@ -197,6 +192,5 @@ class Init
         Log::getInstance()->error($message.' in file '.$file.' on line '.$line."\r\n[trace]\r\n".$e->getTraceAsString());
         Tpl::showErrorTpl($msg);
     }
-
->>>>>>> v1.0.0
+    
 }
