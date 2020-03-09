@@ -1,6 +1,8 @@
 <?php
 namespace App\Controllers\Home;
-use Core\Framework\Controller;
+use App\Controllers\Controller;
+use Core\Framework\Validator;
+
 class Index extends Controller
 {
     public function welcome() 

@@ -1,14 +1,15 @@
 <?php
+declare(strict_types=1);
 namespace Core\Framework;
 class Captcha
 {
-    private static $instance;
+    private static ?Captcha $instance = null;
     private function __constrcut() {}
     private function __clone() {}
     
     public static function getInstance()
     {
-        if(!self::$instance) return new self();
+        if(!self::$instance instanceof self) self::$instance = new self();
         return self::$instance;
     }
 

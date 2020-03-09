@@ -1,12 +1,13 @@
 <?php
+declare(strict_types=1);
 namespace Core\Driver;
 use \Core\Driver\Interfaces\LogInterface;
 use \Core\Framework\Tpl;
 use \Exception as exception;
 class Log implements LogInterface
 {
-    private static $instance;
-    private static $logLevel;
+    private static ?Log $instance = null;
+    private static string $logLevel;
     private function __construct()
     {
         self::$logLevel = strtolower(config('log_level'));
@@ -20,8 +21,8 @@ class Log implements LogInterface
 
     public static function getInstance()
     {
-        if(!self::$instance) {
-            return new self();
+        if(!self::$instance instanceof self) {
+            self::$instance = new self();
         }
         return self::$instance;
     }
@@ -51,12 +52,13 @@ class Log implements LogInterface
         
     }
 
-    private static function logFileName()
+    private static function logFileName(): string
     {
         return APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.date("Ymd",time()).'.log';
     }
 
-    private static function logFileExist(string $fileName = null)
+
+    private static function logFileExist(string $fileName = ''): bool
     {
         $fileName = empty($fileName) ? date("Ymd",time()).'.log' : $fileName;
         if(file_exists(APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.$fileName)) {
@@ -66,7 +68,7 @@ class Log implements LogInterface
         }
     }
 
-    private static function createLogData(string $message, string $level)
+    private static function createLogData(string $message, string $level) : string
     {
         $lineData = "\r\n[".date("Y-m-d H:i:s",time()).'] ['.$level.']'."\r\n";
         $lineData .= "[timeCost: ".round((microtime(true)-APP_STARTTIME),6).'s]'."\r\n";
@@ -90,6 +92,9 @@ class Log implements LogInterface
 
     private static function createLogFile()
     {
+        if(!is_dir(APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs')) {
+           @mkdir(APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs');
+        }
         if(!self::logFileExist()) {
             @fopen(self::logFileName(), "w") or Tpl::showWarningTpl('permission deny to write logFile: '.self::logFileName().'; please check permission of the directory: '.APP_ROOT.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'logs');
         } else {
