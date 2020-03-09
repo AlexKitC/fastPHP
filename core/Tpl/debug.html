@@ -40,7 +40,7 @@
                 <div class="tab-pane">
                         <ul class="list-group">
                             <?php foreach($_SERVER as $k=>$v) {;?>
-                                <li class="list-group-item"><?php if(is_string($v)) echo strtolower($k).', : '.$v;?></li>
+                                <li class="list-group-item"><?php if(is_string($v)) echo strtolower($k).' : '.$v;?></li>
                             <?php };?>
 
                         </ul>
@@ -56,7 +56,9 @@
                         <li class="list-group-item">
                             QQ：392999164
                         </li>
-                         
+                        <li class="list-group-item">
+                            <a target="_blank" href="http://github.com/AlexKitCoder">Github：http://github.com/AlexKitCoder</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -70,6 +72,7 @@ $(function () {
     $('.nav-tabs a').click(function (e) { 
       e.preventDefault();
       $(this).parent("li").addClass("active").siblings().removeClass("active");
+      $(".glyphicon-chevron-up").click();
       $(".tab-content .tab-pane").eq($(this).parent("li").index()).show().siblings().hide();
     });
     

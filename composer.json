@@ -8,5 +8,10 @@
             "common/functions.php",
             "common/helper.php"
         ]
+    },
+    "require": {
+        "php" : ">=7.4.2",
+        "ext-pdo": "*",
+        "ext-gd": "*"
     }
 }

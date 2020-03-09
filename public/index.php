@@ -6,6 +6,8 @@
  * @param  just free your self :)
  */
 
+use Core\Framework\Init;
+
 define('APP_ENTRY',__DIR__);
 define('APP_ROOT',dirname(__DIR__));
 define('APP_MEMORY',memory_get_usage());
@@ -15,4 +17,4 @@ define('APP_NAME','fastPHP');
 require APP_ROOT.'/vendor/autoload.php';
 require APP_ROOT.'/config/conf.php';
 require APP_ROOT.'/routes/route.php';
-return \Core\Framework\Init::getInstance()->start($config, $route);
+return Init::getInstance()->start($config, $route);

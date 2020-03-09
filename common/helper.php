@@ -1,9 +1,14 @@
 <?php
 /**
- * 此文件为框架提供的助手函数，它可以简化对应命名空间下类方法的调用
+ * 此文件为框架提供的助手函数，它可以简化对应命名空间下类方法的调用-不建议修改，与业务相关的公共函数建议放在./functions.php
  */
 
-if(!function_exists('dd')) 
+use Core\Driver\Mysql;
+use Core\Framework\Captcha;
+use Core\Framework\Init;
+use Core\Framework\View;
+
+if(!function_exists('dd'))
 {
     /**
      * 格式化var_dump
@@ -25,10 +30,11 @@ if(!function_exists('show'))
      * @param string $path 模板路径
      * @param array $param 传递给模板的变量
      * @param bool $isViews 是否在业务模块中
+     * @throws Exception
      */
     function show(string $path, array $param = [], bool $isViews = true)
     {
-        \Core\Framework\View::getInstance()->show($path, $param, $isViews);
+        View::getInstance()->show($path, $param, $isViews);
     }
 }
 
@@ -41,7 +47,7 @@ if(!function_exists('config'))
      */
     function config(string $key)
     {
-        $conf = \Core\Framework\Init::getInstance()::$config;
+        $conf = Init::getInstance()::$config;
         if(array_key_exists($key,$conf)) {
             return $conf[$key];
         }
@@ -55,7 +61,7 @@ if(!function_exists('db'))
      */
     function db()
     {
-        return \Core\Driver\Mysql::getInstance();
+        return Mysql::getInstance();
     }
 }
 
@@ -88,6 +94,7 @@ if(!function_exists('create_random_string'))
     /**
      * 生成随机指定长度字符串
      * @param int $length
+     * @return string
      */
     function create_random_string(int $length)
     {
@@ -111,7 +118,7 @@ if(!function_exists('url'))
     {
         if(config('beauty_url') == true) {
 
-        }elseif(config('beauty_url') == false) {//传统模式
+        } elseif (config('beauty_url') == false) {//传统模式
 
         }
     }
@@ -121,10 +128,16 @@ if(!function_exists('getLine'))
 {
     /**
      * 获取指定文件行内容
+     * @param string $file
+     * @param int $line
+     * @param int $length
+     * @return string|null
+     * @throws Exception
      */
-    function getPHPFileLine($file, $line, $length = 40960){
+    function getPHPFileLine(string $file, int $line, int $length = 40960){
         $returnTxt = null;
         $i = 1;
+        if(!file_exists($file)) throw new Exception('file '.$file.'not exist!');
         $handle = @fopen($file, "r");
         if ($handle) {
             while (!feof($handle)) {
@@ -148,14 +161,13 @@ if(!function_exists('Debug')) {
     function Debug()
     {
         if(config('debug') == true && config('debug_window') == true) include APP_ROOT.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'Tpl'.DIRECTORY_SEPARATOR.'debug.html';
-        
     }
 }
 
 if(!function_exists('captcha')) {
     function captcha()
     {
-        \Core\Framework\Captcha::getInstance()->productCaptcha();
+        Captcha::getInstance()->productCaptcha();
     }
 }
 

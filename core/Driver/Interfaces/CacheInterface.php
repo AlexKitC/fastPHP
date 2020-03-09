@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Core\Driver\Interfaces;
 interface CacheInterface
 {
@@ -11,7 +12,8 @@ interface CacheInterface
 
     /**
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
+     * @param null $ttl
      */
     public function set(string $key, $value, $ttl = null);
 

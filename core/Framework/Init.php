@@ -1,13 +1,14 @@
 <?php
+declare(strict_types=1);
 namespace Core\Framework;
+use Core\Driver\Log;
+
 session_start();
-use \Core\Framework\Tpl;
-class Init 
+class Init
 {
-    public  static $config;
-    public  static $route;
-    private static $instance;
-    private static $ds = DIRECTORY_SEPARATOR;
+    public static array $config;
+    public static array $route;
+    private static ?Init $instance = null;
     private function clone() {}
 
     private function __construct() 
@@ -17,7 +18,7 @@ class Init
 
     public static function getInstance()
     {
-        if(!self::$instance) {
+        if(!self::$instance instanceof self) {
             self::$instance = new self();
         }
         return self::$instance;
@@ -46,21 +47,17 @@ class Init
     {
         $uriArr = parse_url($request_uri);
         $request_uri = str_replace(strtolower(config('suffix')), '', $uriArr['path']);
-        if($request_uri == '/captcha') {
-            captcha();
-        } else {
-            $route = self::$route;
-            $flag = false;
-            foreach($route as $k=>$v) {
-                if($k == $request_uri) {
-                    self::parseControllerAndMethod($route[$k]);
-                    $flag = true;
-                    break;
-                }
+        $route = self::$route;
+        $flag = false;
+        foreach($route as $k=>$v) {
+            if($k == $request_uri) {
+                self::parseControllerAndMethod($route[$k]);
+                $flag = true;
+                break;
             }
-            if(!$flag) {
-                Tpl::showErrorTpl('未匹配到路由：'.$request_uri);
-            }
+        }
+        if(!$flag) {
+            Tpl::showErrorTpl('未匹配到路由：'.$request_uri);
         }
     }
 
@@ -72,7 +69,7 @@ class Init
     {
         $tmpArr = explode('@',$uri);
         $method = $tmpArr[1];
-        $classFile = APP_ROOT.'/app/Controllers'.$tmpArr[0].'.php';
+        $classFile = APP_ROOT.'/app/Controllers/'.$tmpArr[0].'.php';
         self::checkFileExist($classFile);
         $pathArr = array_values(array_filter(explode('/',$tmpArr[0])));
         $classNamespace = 'App\\Controllers';
@@ -90,19 +87,9 @@ class Init
                 $controllerInstance->context = $context;//保存上下文信息到控制器实例
                 $controllerInstance->$method();//执行控制器实例方法   
             }catch(\Exception $e) {
-                $file = $e->getFile();
-                $line = $e->getLine();
-                $message = $e->getMessage();
-                $msg = '[\'level\'] : error<br />[\'message\'] : '.$message."<br />['file'] : ".$file."<br />['line'] : ".$line.'<br />[\'info\'] : '.getPHPFileLine($file,$line).'<br />[\'trace\'] : '.$e->getTraceAsString();
-                \Core\Driver\Log::getInstance()->error($message.' in file '.$file.' on line '.$line."\r\n[trace]\r\n".$e->getTraceAsString());
-                Tpl::showErrorTpl($msg);
+                self::handleCatchAfter($e);
             }catch(\Error $e) {
-                $file = $e->getFile();
-                $line = $e->getLine();
-                $message = $e->getMessage();
-                $msg = '[\'level\'] : error<br />[\'message\'] : '.$message."<br />['file'] : ".$file."<br />['line'] : ".$line.'<br />[\'info\'] : '.getPHPFileLine($file,$line).'<br />[\'trace\'] : '.$e->getTraceAsString();
-                \Core\Driver\Log::getInstance()->error($message.' in file '.$file.' on line '.$line."\r\n[trace]\r\n".$e->getTraceAsString());
-                Tpl::showErrorTpl($msg);
+                self::handleCatchAfter($e);
             }
             
         }else {
@@ -113,7 +100,7 @@ class Init
     /**
      * 检测文件是否存在
      * @param string $file_path
-     * @return mixed bool|include file
+     * @return mixed bool|sources
      */
     private static function checkFileExist(string $file_path)
     {
@@ -128,8 +115,9 @@ class Init
      * 检测控制器方法是否存在
      * @param object $controllerInstance 控制器方法实例
      * @param string $func 方法名
+     * @return bool
      */
-    private static function checkFuncExist($controllerInstance, string $func)
+    private static function checkFuncExist($controllerInstance, string $func) : bool
     {
         if(method_exists($controllerInstance, $func)) {
             return true;
@@ -142,22 +130,21 @@ class Init
 
     public static function setMyErrorHandler()
     {
-        set_error_handler(function($errno, $errstr, $errfile, $errline) {
-            $msg = '';
+        set_error_handler(function(int $errno, string $errstr, string $errfile, int $errline) {
             switch ($errno) {
                 case E_NOTICE:
                     $msg = '[\'level\'] : notice<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
-                    \Core\Driver\Log::getInstance()->notice($errstr.' in file '.$errfile.' on line '.$errline);
+                    Log::getInstance()->notice($errstr.' in file '.$errfile.' on line '.$errline);
                     Tpl::showNoticeTpl($msg);
                     break;
                 case E_ERROR:
                     $msg = '[\'level\'] : error<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
-                    \Core\Driver\Log::getInstance()->error($errstr.' in file '.$errfile.' on line '.$errline);
+                    Log::getInstance()->error($errstr.' in file '.$errfile.' on line '.$errline);
                     Tpl::showErrorTpl($msg);
                     break;
                 case E_WARNING:
                     $msg = '[\'level\'] : warning<br />[\'message\'] : '.$errstr."<br />['file'] : ".$errfile."<br />['line'] : ".$errline.'<br />[\'info\'] : '.getPHPFileLine($errfile,$errline);
-                    \Core\Driver\Log::getInstance()->warning($errstr.' in file '.$errfile.' on line '.$errline);
+                    Log::getInstance()->warning($errstr.' in file '.$errfile.' on line '.$errline);
                     Tpl::showWarningTpl($msg);
                     break;
                 default:
@@ -172,12 +159,12 @@ class Init
     private static function checkPHPVersion()
     {
         $version = substr(phpversion(),0,3);
-        if($version < 7.1) {
-            Tpl::showErrorTpl('当前PHP版本: '.$version.' ;请使用7.1以及更新的版本');
+        if($version < 7.4) {
+            Tpl::showErrorTpl('当前PHP版本: '.$version.' ;请使用7.4以及更新的版本');
         }
     }
 
-    private static function getServerInfo()
+    private static function getServerInfo() : array
     {
         return [
             'http_user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'UNKNOW',
@@ -189,6 +176,20 @@ class Init
             'request_uri'     => $_SERVER['REQUEST_URI'] ?? 'UNKNOW',
             'query_string'    => $_SERVER['QUERY_STRING'] ?? 'UNKNOW',
         ];
+    }
+
+    /**
+     * 捕获后执行的动作
+     * @param $e mixed Exception|Error
+     */
+    private static function handleCatchAfter($e)
+    {
+        $file = $e->getFile();
+        $line = $e->getLine();
+        $message = $e->getMessage();
+        $msg = '[\'level\'] : error<br />[\'message\'] : '.$message."<br />['file'] : ".$file."<br />['line'] : ".$line.'<br />[\'info\'] : '.getPHPFileLine($file,$line).'<br />[\'trace\'] : '.$e->getTraceAsString();
+        Log::getInstance()->error($message.' in file '.$file.' on line '.$line."\r\n[trace]\r\n".$e->getTraceAsString());
+        Tpl::showErrorTpl($msg);
     }
 
 }

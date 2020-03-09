@@ -1,0 +1,11 @@
+
+[2020-03-09 13:07:54] [error]
+[timeCost: 0.002477s]
+[message]: Argument 1 passed to Core\Framework\Validator::isRealAge() must be of the type int, array given, called in /Users/alex/php/fastPHP/app/Controllers/Home/Index.php on line 10 in file /Users/alex/php/fastPHP/core/Framework/Validator.php on line 54
+[trace]
+#0 /Users/alex/php/fastPHP/app/Controllers/Home/Index.php(10): Core\Framework\Validator->isRealAge(Array)
+#1 /Users/alex/php/fastPHP/core/Framework/Init.php(88): App\Controllers\Home\Index->welcome()
+#2 /Users/alex/php/fastPHP/core/Framework/Init.php(54): Core\Framework\Init::parseControllerAndMethod('/Home/Index@wel...')
+#3 /Users/alex/php/fastPHP/core/Framework/Init.php(38): Core\Framework\Init::run('/')
+#4 /Users/alex/php/fastPHP/public/index.php(20): Core\Framework\Init->start(Array, Array)
+#5 {main}

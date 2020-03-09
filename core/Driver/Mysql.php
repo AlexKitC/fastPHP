@@ -1,5 +1,8 @@
 <?php
 namespace Core\Driver;
+use PDO;
+use PDOException;
+
 class Mysql
 {
     /**
@@ -8,9 +11,9 @@ class Mysql
      * @return    'call back white and white back--'
      */
 
-    private static $instance = null;//连接实例 如果有多数据库操作的场景请自行把$instance $conn扩展为数组使用，根据需要实例化对应连接即可(即多例模式)
-    public static $conn;//连接句柄
-    private static $config = [//数据库配置 如有临时配置的需求,请自行扩展getInstance参数传入临时config并merge进行配置
+    private static ?Mysql $instance = null;//连接实例 如果有多数据库操作的场景请自行把$instance $conn扩展为数组使用，根据需要实例化对应连接即可(即多例模式)
+    public static PDO $conn;//连接句柄
+    private static array $config = [//数据库配置 如有临时配置的需求,请自行扩展getInstance参数传入临时config并merge进行配置
         'driver' => 'mysql',
         'host'   => 'localhost',
         'dbname' => 'test',
@@ -20,11 +23,11 @@ class Mysql
 
     private function __construct()
     {
-        if(!class_exists('PDO')) throw new \PDOException('you may need mysql_pdo extend !');
+        if(!class_exists('PDO')) throw new PDOException('you may need mysql_pdo extend !');
         try{
             $dsn = self::$config['driver'].':host='.self::$config['host'].';dbname='.self::$config['dbname'];
-            self::$conn = new \PDO($dsn, self::$config['user'], self::$config['pass']);
-        }catch (\PDOException $e) {
+            self::$conn = new PDO($dsn, self::$config['user'], self::$config['pass']);
+        }catch (PDOException $e) {
             echo $e->getMessage();die;
         }
     }
@@ -35,8 +38,8 @@ class Mysql
      */
     public static function getInstance()
     {
-        if(is_null(self::$instance)) {
-            return new self();
+        if(!self::$instance instanceof self) {
+            self::$instance = new self();
         }
         return self::$instance;
     }
@@ -52,7 +55,7 @@ class Mysql
         $sth = self::$conn->prepare($sql);
         $sth = self::bindParam($sth, $bindParam);
         $sth->execute();
-        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -171,8 +174,9 @@ class Mysql
 
     /**
      * 参数绑定
-     * @param object $sth   预处理的语句返回的对象
-     * @param array  $param 待绑定的参数
+     * @param object $sth 预处理的语句返回的对象
+     * @param array $param 待绑定的参数
+     * @return object
      */
     private static function bindParam(object $sth, array $param)
     {
@@ -189,8 +193,8 @@ class Mysql
 
 //如何使用?
 // $db = Mysql::getInstance();如果觉得麻烦 可自行使用助手函数封装为 function db() {
-//                                                      return Mysql::getInstance();
-//                                                   }
+//                                                                return Mysql::getInstance();
+//                                                             }
 // 则可以直接 db()->select()  db()->update() db()->insert
 // 查询
 //      $db->select("SELECT * FROM table_name WHERE xid = ? LIMIT ?", [3,5]);查询xid=3的5条数据

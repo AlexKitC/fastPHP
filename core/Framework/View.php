@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
 namespace Core\Framework;
-class View 
+use Exception;
+
+class View
 {
-    private $suffix;
+    private string $suffix;
     public  $value;
-    private static $instance;
+    private static ?View $instance = null;
 
     private function clone() {}
 
@@ -19,14 +22,18 @@ class View
      * 获取视图实例
      */
     public static function getInstance() {
-        if(!self::$instance) {
-            return new self();
+        if(!self::$instance instanceof self) {
+            self::$instance = new self();
         }
         return self::$instance;
     }
 
     /**
      * 渲染html模板
+     * @param string $path
+     * @param array $params
+     * @param bool $isViews
+     * @throws Exception
      */
     public function show(string $path, array $params = [], bool $isViews = true) {
         $html_path_arr = (explode('/',$path));
@@ -49,12 +56,14 @@ class View
             }
             include $base_path;
         }else {
-            throw new \Exception('html file: '.$base_path.'不存在 :(');
+            throw new Exception('html file: '.$base_path.'不存在 :(');
         }
     }
 
     /**
      * 模板变量赋值
+     * @param $key
+     * @param $val
      */
     public function assign($key,$val)
     {
@@ -68,6 +77,7 @@ class View
     /**
      * 检查模板文件是否存在
      * @param string $html_path
+     * @return bool|string
      */
     private function htmlExist(string $html_path)
     {
