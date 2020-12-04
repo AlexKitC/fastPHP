@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Core\Driver;
-use \Core\Driver\Interfaces\CacheInterface;
+use Core\Driver\Interfaces\CacheInterface;
 class Cache implements CacheInterface
 {
     public function __construct()

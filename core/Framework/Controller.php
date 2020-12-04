@@ -1,5 +1,8 @@
 <?php
+declare(strict_types=1);
 namespace Core\Framework;
+use Exception;
+
 class Controller
 {
 
@@ -13,8 +16,9 @@ class Controller
      * @param string $msg
      * @param array $interval
      * @param string $pathinfo
+     * @throws Exception
      */
-    public function success(string $msg = '操作成功', int $interval = 3, string $pathinfo)
+    public function success(string $msg = '操作成功', int $interval = 3, string $pathinfo='')
     {
         show('success', ['title'=>'成功提示', 'msg'=>$msg, 'interval'=>$interval], false);die;
     }
