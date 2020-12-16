@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers\Home;
 use App\Controllers\Controller;
-use Core\Framework\Validator;
 
 class Index extends Controller
 {
